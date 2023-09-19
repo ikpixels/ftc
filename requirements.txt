@@ -25,8 +25,7 @@ django-embed-video==1.4.9
 django-js-asset==2.1.0
 django-qr-code==3.1.1
 django-storages==1.13.2
-django-widget-tweaks==1.4.12
-dropbox==11.36.2
+django-widget-tweaks==1.4.1
 google-api-core==2.11.1
 google-auth==2.22.0
 google-cloud-core==2.3.3
