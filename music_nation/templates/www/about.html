@@ -1,0 +1,66 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+   
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe' %}">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">About</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title">
+						<h1>IKPIXELS</h1>
+
+
+						<p>IKpixels is a reputed and well known platform offering Music Distribution, Events Marketing and other digital marketing solutions in Malawi.</p>
+
+						<p>Our goal at IKpixels, is to work with upcoming artist to meet their goal and push through.</p>
+
+					</div>
+				</div>
+				<!-- end title -->
+
+				<div class="col-12 col-lg-12">
+					<div class="main__title">
+					<h3>OUR MAIN AREAS OF FOCUS</h3>
+				    </div>
+				</div>
+
+				<div class="col-12 col-lg-6">
+					<div class="step">
+						<span class="step__number">01</span>
+						<h3 class="step__title">IKPIXELS MUSIC</h3>
+						<p class="step__text">Ikpixels allows users to stream and download the best song. On Other hand artists are allowed to upload/sell their music. Loyalty of the song remains 100% to the owner of the song.The only way our artist can make money from this site is through selling ther music.</p>
+						<a href="{% url 'ikpixels:music' %}" class="main__load">Learn More</a>
+					</div>
+				</div>
+
+				<div class="col-12 col-lg-6">
+					<div class="step">
+						<span class="step__number">02</span>
+						<h3 class="step__title">IKPIXELS EVENTS TICKETS</h3>
+						<p class="step__text"></p>
+						<a href="{% url 'ikpixels:ticket' %}" class="main__load">Learn more</a>
+					</div>
+				</div>
+
+				<div class="col-12">
+					
+				</div>
+			</div>
+	</main>
+	<!-- end main content -->
+
+ {%endblock%}

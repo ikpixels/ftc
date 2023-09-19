@@ -1,0 +1,169 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+ 
+
+{% if podcasts %}
+<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe' %}">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Podcasts</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>Podcasts</h1>
+					</div>
+				</div>
+				<!-- end title -->
+			</div>
+
+			<div class="row row--grid">
+				<div class="col-12">
+					<div class="main__filter">
+						<form action="#" class="main__filter-search">
+							<input type="text" placeholder="Search...">
+							<button type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/></svg></button>
+						</form>
+
+						<div class="main__filter-wrap">
+							<select onchange=" podcast_cate(value);" class="main__select" name="genres">
+								<option value="Music">Music</option>
+								<option value="Arts">Arts</option>
+								<option value="Business">Business</option>
+								<option value="Comedy">Comedy</option>
+								<option value="Education">Education</option>
+								<option value="Fiction">Fiction</option>
+								<option value="Government">Government</option>
+								<option value="History">History</option>
+								<option value="Health & Fitness">Health & Fitness</option>
+								<option value="Kids & Family">Kids & Family</option>
+								<option value="Leisure">Leisure</option>
+								<option value="News">News</option>
+								<option value="Religion & Spirituality">Religion & Spirituality</option>
+								<option value="Science">Science</option>
+								<option value="Society & Culture">Society & Culture</option>
+								<option value="Sports">Sports</option>
+								<option value="Technology">Technology</option>
+								<option value="True Crime">True Crime</option>
+								<option value="TV & Film">TV & Film</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="row row--grid podcasts2">
+						{% for p in podcasts %}
+						<div class="col-12 col-sm-6 col-lg-4">
+							<div class="live">
+								<a onclick="add_video_view('{{p.id}}')" href="{{p.youtubelink}}" class="live__cover open-video">
+									<iframe class="rounded" width="420" height="315" src="{{p.split_link}}" frameborder="0" allowfullscreen></iframe>
+									<span class="live__value">{{p.views}} viewers</span>
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"></path></svg>
+								</a>
+								
+							</div>
+						</div>
+						{% empty %}
+						   {% include 'www/404.html' %}
+						{% endfor %}
+					</div>
+
+					<div class="row row--grid">
+						<div class="col-12">
+							<!-- <button class="main__load" type="button">Load more</button>-->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<section class="row row--grid">
+				<div class="col-12 col-xl-8">
+					{% include 'ecom/store-snipt.html' %}<br>
+					<div>
+						<img width="100%" src="{%static 'www/img/adv.png' %}">
+					</div>
+				</div>
+
+				<div class="col-12 col-xl-4">
+					<div class="row row--grid">
+						<!-- title -->
+						<div class="col-12">
+							<div class="main__title">
+								<h2><a href="#">New Singles</a></h2>
+							</div>
+						</div>
+						<!-- end title -->
+
+						<div class="col-12">
+							<ul class="main__list">
+								{% for song in  song %}
+								<li class="single-item">
+									<a onclick="streamingCount('{{song.id}}');" data-link data-title="{{song.song_name}}" data-artist="{{song.Artist}}" data-img="{{song.song_logo.url}}" href="{{song.song_file.url}}" class="single-item__cover">
+										<img src="{{song.song_logo.url}}" alt="">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16,2a3,3,0,0,0-3,3V19a3,3,0,0,0,6,0V5A3,3,0,0,0,16,2Zm1,17a1,1,0,0,1-2,0V5a1,1,0,0,1,2,0ZM8,2A3,3,0,0,0,5,5V19a3,3,0,0,0,6,0V5A3,3,0,0,0,8,2ZM9,19a1,1,0,0,1-2,0V5A1,1,0,0,1,9,5Z"/></svg>
+									</a>
+									<div class="single-item__title">
+										<h4><a href="{% url 'music_nation:album_detail' username=song.album.album_artist album=song.album.album_name %}">{{song.song_name}}</a></h4>
+										<span><a href="{% url 'music_nation:ArtistDetail' song.album.artist %}">{{song.Artist}}</a></span>
+									</div>
+									{% include 'www/music_duration_script.html' %}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+         {% include 'Event/event_snipt.html' %}
+			<!-- partners -->
+			<div class="row">
+				<div class="col-12">
+					<div class="partners owl-carousel">
+						 
+					</div>
+				</div>
+			</div>
+			<!-- end partners -->
+		</div>
+	</main>
+	<!-- end main content -->
+
+{% else %}
+   <div class="row">
+   	   {% include 'www/404.html' %}
+   </div>
+ {% endif %}
+{% include 'Event/modal.html' %}
+
+<script type="text/javascript">
+	function podcast_cate(args){
+		$.ajax({
+        type  : "GET",
+        url   : '/podcasts/',
+        data  : {'podcast_id':args, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        
+
+        success : function(response){
+            $(".podcasts2").html(response['data']);
+         
+        },
+        error :function(error){
+            //main_error();
+            alert('something is wrong');
+        }
+    })
+	}
+</script>
+{%endblock%}

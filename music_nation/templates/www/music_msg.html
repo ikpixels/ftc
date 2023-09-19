@@ -1,0 +1,21 @@
+{% load static %}
+{% load widget_tweaks %}
+<div class="msg-Comments">
+							<div class="comments__title">
+								<h4>Comments</h4>
+								<span>{{msg_count}}</span>
+							</div>
+
+							<ul class="comments__list">
+								{% for msg in msg %}
+								<li class="comments__item">
+									<div class="comments__autor">
+										<img class="comments__avatar" src="{%static 'www/img/avatar.svg'%}" alt="">
+										<span class="comments__name">{{msg.user}}</span>
+										<span class="comments__time">{{msg.created_at}}</span>
+									</div>
+									<p class="comments__text">{{msg.body}}</p>
+								</li>
+								{% endfor %}
+							</ul>
+						    </div>

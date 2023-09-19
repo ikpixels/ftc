@@ -1,0 +1,60 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load widget_tweaks %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+
+
+                        <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                            <div class="row row--grid">
+                                <div class="col-12">
+                                    <div class="dashbox">
+                                        <div class="dashbox__table-wrap">
+                                            <div class="dashbox__table-scroll">
+                                                <table class="main__table">
+                                                    <tbody>
+                                                        <tr style="color:white;">
+                                                            <td></td>
+                                                            <td>ITEM</td>
+                                                            <td>DATE</td>
+                                                            <td>QUANTITY</td>
+                                                            <td>TOTAL</td>
+                                                            <td>STATUS</td>
+                                                        </tr>
+                                                        {% for products,order in data %}
+                                                        {%for product in products%}
+                                                        <tr style="color">
+                                                            <td>
+                                                                <div class="main__table-img">
+                                                                    <img src="{{product.product_image.url}}" alt="">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="main__table-text"><a href="#">{{product.name}}</a></div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="main__table-text">{{order.order_date}}</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="main__table-text">1</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="main__table-text main__table-text--price">MKW{{product.price}}</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="main__table-text main__table-text--green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.72,8.79l-4.29,4.3L8.78,11.44a1,1,0,1,0-1.41,1.41l2.35,2.36a1,1,0,0,0,.71.29,1,1,0,0,0,.7-.29l5-5a1,1,0,0,0,0-1.42A1,1,0,0,0,14.72,8.79ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"/></svg>{{order.status}}</div>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+{% endblock content %}

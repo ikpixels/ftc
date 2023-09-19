@@ -1,0 +1,22 @@
+<div class="col-12" style="display:none;">
+	<div class="release">
+		<div class="release__list">
+			<ul class="main__list main__list--playlist main__list--dashbox">
+            {% for song in player_song %}
+				<li class="single-item">
+					<a data-playlist data-title="{{song.song_name}}" data-artist="{{song.Artist}}" data-img="{{song.song_logo.url}}" href="{{ song.song_file.url }}" class="single-item__cover">
+						<img src="{{song.song_logo.url}}" alt="">
+					</a>
+				    <div class="single-item__title">
+						<h4>{{song.song_name}}</h4>
+							<span><a href="#">by {{song.Artist}}</a></span>
+					</div>
+					<a href="{%url 'music_nation:remove_from_playlist' song.id%}" class="single-item__add"></a>
+					<a href="{{song.song_file.url}}" download="{{song.song_name}}" class="single-item__export"></a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+	

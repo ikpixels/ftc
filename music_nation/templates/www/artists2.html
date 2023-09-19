@@ -1,0 +1,21 @@
+{% load static %}
+<div class="row row--grid">
+
+						{% for Artist in Artist %}
+						<div class="col-6 col-sm-4 col-md-3 col-xl-2">
+							<a href="{% url 'music_nation:ArtistDetail' Artist.id %}" class="artist">
+								<div class="artist__cover">
+									{% if Artist.profile_pic %}
+									<img src="{{Artist.profile_pic.url}}" alt="">
+									{% else %}
+									<img src="{% static 'www/img/artists/artist2.jpg' %}" alt="">
+									{% endif %}
+								</div>
+								<h3 class="artist__title">{{Artist}}</h3>
+							</a>
+						</div>
+						{% empty %}
+						{% include 'www/404.html' %}
+						{% endfor %}
+					</div>
+					<!--<button class="main__load" type="button">Load more</button>-->

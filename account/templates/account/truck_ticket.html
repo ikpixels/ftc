@@ -1,0 +1,90 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Order</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>Tickets orders</h1>
+					</div>
+				</div>
+				<!-- end title -->
+			</div>
+
+			<div class="row row--grid">
+				<div class="col-12 col-lg-12">
+					<!-- cart -->
+					<div class="cart">
+						<div class="cart__table-wrap">
+							<div class="cart__table-scroll">
+								<table class="cart__table">
+									<thead>
+										
+											<tr class="p-4">
+											<td>Artwork</td>
+											<td>Title</td>
+											<td>Total booked</td>
+											<td>Reqular price</td>
+											<td>VIP price</td>
+											<td></td>
+											</tr>
+
+
+										
+									</thead>
+
+									<tbody>
+										{% for t in ticket %}
+										<tr>
+											<td>
+												<img src="{{t.product_image.url }}" height="65">
+											</td>
+											<td>{{t.name}}</td>
+											<td>{{t.ticket_booked}}</td>
+											<td>{{t.regular_price}}</td>
+											<td>{{t.vip_price}}</td>
+											<td>
+												<a href="{% url 'Event:approve_order' t.id %}">Details</a>
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+					<!-- end cart -->
+				</div>
+			</div>
+
+			<!-- partners -->
+			<div class="row">
+				<div class="col-12">
+					<div class="partners owl-carousel">
+						<a href="#" class="partners__img">
+							<img src="{% static 'www/img/partners/3docean-light-background.png' %}" alt="">
+						</a>
+
+						
+					</div>
+				</div>
+			</div>
+			<!-- end partners -->
+		</div>
+	</main>
+	<!-- end main content -->
+{%endblock%}

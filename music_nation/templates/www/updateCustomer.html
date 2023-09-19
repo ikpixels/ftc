@@ -1,0 +1,139 @@
+{% extends 'www/base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			
+			<div class="row row--grid">
+				<div class="col-12">
+					<div class="profile">
+						<div class="profile__user">
+							<div class="profile__avatar">
+								<img src="{% static 'www/img/avatar.svg' %}" alt="">
+							</div>
+							<div class="profile__meta">
+								<h3>{{request.user}}</h3>
+								<span>IKpixels</span>
+							</div>
+						</div>
+
+						<!-- tabs nav -->
+						<ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Orders</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link"  href="{% url 'music_nation:profile_detail' request.user %}" >My Album</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Add Album</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link"  href="#">Add Bio</a>
+							</li>
+						</ul>
+						<!-- end tabs nav -->
+
+					</div>
+
+					<!-- content tabs -->
+					<div class="tab-content">
+						
+						<div class="">
+							<div class="row row--grid">
+								<!-- details form -->
+								<div class="col-12 col-lg-8">
+									<form method="POST" enctype="multipart/form-data"  class="sign__form sign__form--profile">
+										{% csrf_token %}
+										<div class="row">
+											<div class="col-12">
+												<h4 class="sign__title">Edit Profile</h4>
+											</div>
+
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													{% render_field form.address class="sign__input" placeholder="Adress" autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													{% render_field form.account_type class="sign__input" placeholder="Account Type" autocomplete="off" %}
+												</div>
+											</div>
+
+											
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													{% render_field form.mobile class="sign__input" placeholder="Contact" autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													{% render_field form.fb class="sign__input" placeholder="FB Link" autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													{% render_field form.tweeter class="sign__input" placeholder="Tweeter Link" autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													{% render_field form.instagram class="sign__input" placeholder="Instagram Link" autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-12 col-lg-12 col-xl-12">
+												<div class="sign__group">
+													{% render_field form.background class="sign__input" placeholder="Background"  autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-12 col-lg-12 col-xl-12">
+												<div class="sign__group">
+													{{form.media}}
+													{% render_field form.fullBiography class="sign__input"  autocomplete="off" %}
+												</div>
+											</div>
+
+											<div class="col-12 col-md-12 col-lg-12 col-xl-12">
+												<div style="color:white;" class="sign__group">
+													<label class="sign__label" for="lastname">Profile picture</label><br><br><br>
+													{% render_field form.profile_pic %}
+												</div>
+											</div>
+
+											<div class="col-12">
+												<button class="sign__btn" type="submit">Save</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- end details form -->
+
+								
+							</div>
+						</div>
+					</div>
+					<!-- end content tabs -->
+				</div>
+			</div>	
+		</div>
+	</main>
+	<!-- end main content -->
+
+ {%endblock%}

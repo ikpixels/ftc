@@ -1,0 +1,68 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{%block content%}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<!-- slider -->
+			<section class="row">
+				<div class="col-12">
+					<div class="hero owl-carousel" id="hero">
+						<div class="hero__slide" data-bg="{% static 'www/img/ik/bg1.jpg' %}">
+							<h1 class="hero__title">Web Design and  Development</h1>
+							<p class="hero__text">We deliver both simple and complex Websites with everything from product promotion to secure checkout services.</p>
+							<div class="hero__btns">
+							</div>
+						</div>
+
+						<div class="hero__slide" data-bg="{% static 'www/img/ik/bg1.jpg' %}">  <h1 class="hero__title">Web Design and  Development</h1>
+						   <p class="hero__text">We deliver both simple and complex Websites with everything from product promotion to secure checkout services.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- end slider -->
+
+			<div class="row row--grid">
+				<div class="col-12 col-xl-10">
+					<div class="article">
+						<!-- article content -->
+						<div class="article__content">
+							
+							<p>One of the most powerful tools to make an impact in the corporate industry is through online presence. Today business is no longer limited to particular city or regions. With the growth of internet usage, having a dynamic website of your own is sure to benefit your company and help you create lasting goodwill</p>
+
+							<p>Dynamic Websites are database driven websites, like eCommerce, blog, forum, portal, member registration and login, etc. This type of website usually has a backend control panel through which administrator can manage the website contents, user accounts, products data, etc</p>
+
+							<p>SOME SPECIAL SERVICES</p>
+
+							<ul>
+								<li>eCommerce website</li>
+								<li>Business website</li>
+								<li>Charity website</li>
+								<li>Education website</li>
+								<li>e.t.c</li>
+							</ul>
+
+							<p></p>
+						</div>
+						<!-- end article content -->
+
+						<!-- share -->
+						<div class="share">
+							<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+                            <div class="elfsight-app-1e96d82c-7892-42db-b7f1-dc7bc9f09e9f"></div>
+						</div>
+						<!-- end share -->
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</main>
+	{% include 'Event/modal.html' %}
+	<!-- end main content -->
+
+{% endblock %}

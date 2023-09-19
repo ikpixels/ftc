@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+<!-- modal ticket -->
+	{% for song in songs %}
+	<form method="POST" action="#" id="{{song.id}}" class="zoom-anim-dialog mfp-hide modal modal--form">
+		{% csrf_token %}
+		<button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></svg></button>
+
+		<h4 class="sign__title">{{song}} | MK{{song.price}}</h4>
+		
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Card Number</label>
+			{% render_field form.cc_number class="sign__input" %}
+		</div>
+        <input style="display:none;" type="text" value="{{song.id}}" name="d_id">
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Expiration Date</label>
+			{% render_field form.cc_expiry class="sign__input"  %}
+		</div>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">CVV/CVC</label>
+			{% render_field form.cc_code class="sign__input" %}
+		</div>
+		<button class="sign__btn" type="submit">Buy</button>
+	</form>
+	{% endfor %}
+	<!-- end modal ticket -->
+
+
+
+	<!-- modal buy -->
+	<form action="#" id="modal-buy" class="zoom-anim-dialog mfp-hide modal modal--form">
+		<button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></svg></button>
+
+		<h4 class="sign__title">Buy music album</h4>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label">Price:</label>
+			<span class="sign__value">MK18.00</span>
+
+			<span class="sign__text sign__text--small">You will receive code used to download music after making payment</span><br><br>
+        
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Card Number</label>
+			{% render_field form.cc_number class="sign__input" %}
+		</div>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Expiration Date</label>
+			{% render_field form.cc_expiry class="sign__input"  %}
+		</div>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">CVV/CVC</label>
+			{% render_field form.cc_code class="sign__input" %}
+		</div>
+		<button class="sign__btn" type="submit">Buy</button>
+		</div>
+	</form>

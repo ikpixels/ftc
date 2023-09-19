@@ -1,0 +1,48 @@
+
+						<div class="cart__table-wrap">
+							<div class="cart__table-scroll">
+								<table class="cart__table table">
+									<thead>
+										
+											<tr>
+											<td colspan="2">Time</td>
+											<td>Customer</td>
+											<td>Amount (mk)</td>
+											<td>Ref</td>
+											<td>PYT Method</td>
+											<td>acc Num</td>
+											<td>wew</td>
+											</tr>
+
+
+										
+									</thead>
+
+									<tbody>
+									
+										{% for t in orders %}
+										<tr>
+											<td colspan="4">{{t.created_at}}</td>
+											<td>
+												{{t.user}}
+											</td>
+											<td>{{t.ticket_type}}</td>
+											<td>{{t.ref}}</td>
+											<td>{{t.payment_mathod}}</td>
+											<td>{{t.account_num}}</td>
+											{% if t.paid == 'Approved' %}
+											<td>{{t.ticket_number}}</td>
+											{% else %}
+											<td>
+												<a onclick="Aprove_pymt('{{t.id}}','{% url 'Event:approve_order' event.id %}');" href="javascript:void(0);">a</a>
+											</td>
+											{% endif %}
+										</tr>
+										
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+				

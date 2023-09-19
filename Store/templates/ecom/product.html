@@ -1,0 +1,105 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load crispy_forms_tags %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item"><a href="{% url 'store:store' %}">Store</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Product</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>{{product.name}}</h1>
+					</div>
+				</div>
+				<!-- end title -->
+
+				<div class="col-12">
+					<div class="store-item">
+						<div class="store-item__content">
+							<div class="store-item__carousel owl-carousel">
+								<div class="store-item__cover">
+									<img src="{{product.product_image.url}}" alt="">
+								</div>
+                                 
+                                 {% if product.product_image2 %}
+								<div class="store-item__cover">
+									<img src="{{product.product_image2.url}}" alt="">
+								</div>
+								{% endif %}
+								{% if product.product_image3 %}
+								<div class="store-item__cover">
+									<img src="{{product.product_image3.url}}" alt="">
+								</div>
+								{% endif %}
+								{% if product.youtube_video_link %}
+								<div class="store-item__cover">
+                                {% video product.youtube_video_link 'small' %}
+                                </div>
+                                {% endif %}
+							</div>
+
+						</div>
+
+						<div class="store-item__description">
+							<!-- article content -->
+							<div class="article__content">
+								<h4>{{product.name}}</h4>
+
+								<span class="article__price">MK {{product.price}}</span>
+
+								<p>{{product.simple_discription}}</p>
+
+								
+
+								<a href="{% url 'store:add-to-cart' product.id  %}" class="article__buy">Add to cart</a>
+                                
+                                <p>{{product.description|safe}}</p>
+
+                                {% if product.youtube_video_link %}
+								<div class="store-item__cover">
+                                {% video product.youtube_video_link 'small' %}
+                                </div>
+                                {% endif %}
+								
+							</div>
+							
+							
+							
+							<!-- end article content -->
+
+							<!-- share -->
+							<div class="share">
+								<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+                                <div class="elfsight-app-1e96d82c-7892-42db-b7f1-dc7bc9f09e9f"></div>
+							</div>
+
+							<!-- end share -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- recommend -->
+			{% include 'ecom/store-snipt.html' %}
+			<!-- end recommend -->
+
+			{% include 'Event/event_snipt.html' %}
+		</div>
+	</main>
+	<!-- end main content -->
+{% include 'Event/modal.html' %}
+ {%endblock%}

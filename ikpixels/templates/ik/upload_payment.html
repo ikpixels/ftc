@@ -1,0 +1,58 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{%block content%}
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe' %}">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Subscribe</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- registration form -->
+				<div class="col-12">
+					<div class="sign">
+						<div class="sign__content">
+							<form action="#" method="post" class="sign__form">
+								{%csrf_token%}
+								<a href="/" class="sign__logo">
+									<img src="{% static 'www/img/logo.png' %}" alt="">
+								</a>
+
+								<div class="sign__group">
+									<label class="sign__label">Subscription type</label>
+									{% render_field form.category class="sign__input" autocomplete="off" %}
+								</div>
+
+								<div class="sign__group">
+									<label class="sign__label">Payment method</label>
+									{% render_field form.payment_method class="sign__input" autocomplete="off" %}
+								</div>
+
+								<div class="sign__group">
+									<label class="sign__label">Amount paid - MK</label>
+									{% render_field form.amount class="sign__input" placeholder="Email" autocomplete="off" %}
+								</div>
+
+								<div class="sign__group">
+									<label class="sign__label">Payment Reference Number</label>
+									{% render_field form.PaymentReferenceNumber class="sign__input" autocomplete="off" %}
+								</div>
+								<button class="sign__btn" type="submit">Subscribe</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- end registration form -->
+			</div>
+		</div>
+	</main>
+	<!-- end main content -->
+
+{%endblock%}

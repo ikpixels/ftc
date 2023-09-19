@@ -1,0 +1,105 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe' %}">Home</a></li>
+						<li class="breadcrumb__item"><a href="#">All music</a></li>
+						
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+			
+
+				<div class="col-12">
+					<div class="release">
+						
+
+						<div class="release__list">
+							<ul class="main__list main__list--playlist main__list--dashbox">
+
+
+								{% for album in albums %}
+
+								{% for song in album.songs.all %}
+								<li class="single-item">
+									<a data-playlist data-title="{{song.song_name}}" data-artist="{{album.album_artist}}" data-img="{{ album.album_logo.url }}" href="{{ song.song_file.url }}" class="single-item__cover">
+										<img src="{{ album.album_logo.url }}" alt="">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16,2a3,3,0,0,0-3,3V19a3,3,0,0,0,6,0V5A3,3,0,0,0,16,2Zm1,17a1,1,0,0,1-2,0V5a1,1,0,0,1,2,0ZM8,2A3,3,0,0,0,5,5V19a3,3,0,0,0,6,0V5A3,3,0,0,0,8,2ZM9,19a1,1,0,0,1-2,0V5A1,1,0,0,1,9,5Z"/></svg>
+									</a>
+									<div class="single-item__title">
+										<h4><a href="#">{{song.song_name}}</a></h4>
+										<span><a href="#">{{album.album_artist}}</a></span>
+									</div>
+									<a href="{% url 'music_nation:add-to-playlist' song.id %}" class="single-item__add">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"/></svg>
+									</a>
+									<a href="#" class="single-item__export">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Zm-9.71,1.71a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l4-4a1,1,0,0,0-1.42-1.42L13,12.59V3a1,1,0,0,0-2,0v9.59l-2.29-2.3a1,1,0,1,0-1.42,1.42Z"></path></svg>
+									</a>
+									<span class="single-item__time">2:58</span>
+								</li>
+								{% endfor %}
+								{% endfor %}
+							</ul>
+						</div>
+
+						<div class=" ml-4 release__content">
+							<div class="release__cover">
+								<img src="{{ album.album_logo.url }}" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+	
+			</div>
+		</div>
+
+
+		<!-- store -->
+			<section class="row row--grid">
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title">
+						<h2>Products</h2>
+
+						<a href="#" class="main__link">See all <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg></a>
+					</div>
+				</div>
+				<!-- end title -->
+
+				<div class="col-12">
+					<div class="main__carousel-wrap">
+						<div class="main__carousel main__carousel--store owl-carousel" id="store">
+							<div class="product">
+								<div class="product__img">
+									<img src="{% static 'www/img/store/item1.jpg' %}" alt="">
+
+									<button class="product__add" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"/></svg></button>
+								</div>
+								<h3 class="product__title"><a href="product.html">Vinyl Player</a></h3>
+								<span class="product__price">$1 099</span>
+								<span class="product__new">New</span>
+							</div>
+						</div>
+                        <br>
+						<button class="main__nav main__nav--prev" data-nav="#store" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,11H9.41l3.3-3.29a1,1,0,1,0-1.42-1.42l-5,5a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l5,5a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L9.41,13H17a1,1,0,0,0,0-2Z"/></svg></button>
+						<button class="main__nav main__nav--next" data-nav="#store" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/></svg></button>
+					</div>
+				</div>
+			</section>
+			<!-- end store -->
+	</main>
+	<!-- end main content -->
+
+{%endblock%}

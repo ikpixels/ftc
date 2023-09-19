@@ -1,0 +1,44 @@
+<!-- modal ticket -->
+	{% for v in events %}
+	<form method="POST" action="{% url 'Event:ticket_order' v.id %}" id="{{v.id}}" class="zoom-anim-dialog mfp-hide modal modal--form">
+		{% csrf_token %}
+		<button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/></svg></button>
+
+		<h4 class="sign__title">{{v.name}}</h4>
+		<div class="sign__group sign__group--row">
+			<span class="sign__text sign__text--small">Make payment first through Airtel Money,Mphamba or National bank then fill this form with correct information of your payment</span><br>
+			<label class="sign__label" for="value">Choose ticket:</label>
+			<select class="sign__select" name="ticket_type" id="value">
+				<option value="{{v.regular_price}}">Regular - MK {{v.regular_price}}</option>
+				<option value="{{v.vip_price}}">VIP - MK {{v.vip_price}} </option>
+				
+			</select>
+		</div>
+		<div class="sign__group sign__group--row">
+			 <label class="sign__label" for="value">payment method used:</label>
+			<select class="sign__select" name="method" id="value">
+				<option value="Airtel Money">Airtel Money - 0993344416</option>
+				<option value="Mpamba">Mpamba - 0882935706</option>
+				<option value="Nation Bank">National Bank - 1004820758</option>
+			</select>
+		</div>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Payment reference</label>
+			<input class="sign__input" type="text" name="ref">
+		</div>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Account name</label>
+			<input class="sign__input" type="text" name="acc_name">
+		</div>
+
+		<div class="sign__group sign__group--row">
+			<label class="sign__label" for="value">Account number / number</label>
+			<input class="sign__input" type="text" name="acc_num">
+		</div>
+
+		<button class="sign__btn" type="submit">Buy</button>
+	</form>
+	{% endfor %}
+	<!-- end modal ticket -->

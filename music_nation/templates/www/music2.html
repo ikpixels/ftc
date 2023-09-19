@@ -1,0 +1,41 @@
+<div class="row row--grid releases">
+
+						{% for song in tracks %}
+						<div class="col-6 col-sm-4 col-lg-2">
+							<div class="album">
+								<div class="album__cover">
+									{% if song.song_logo %}
+									<img src="{{song.song_logo.url}}" alt="">
+									{% else %}
+									<img src="img/covers/cover1.jpg" alt="">
+									{% endif %}
+									<a onclick="streamingCount('{{song.id}}');" data-link data-title="{{song.song_name}}" data-artist="{{song.album.album_artist}}" data-img="{{ song.song_logo.url }}" href="{{ song.song_file.url }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg></a>
+									<span class="album__stat">
+										<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Zm-9.71,1.71a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l4-4a1,1,0,0,0-1.42-1.42L13,12.59V3a1,1,0,0,0-2,0v9.59l-2.29-2.3a1,1,0,1,0-1.42,1.42Z"></path></svg>{{song.downloads}}</span>
+										<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,13.18V11A8,8,0,0,0,4,11v2.18A3,3,0,0,0,2,16v2a3,3,0,0,0,3,3H8a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1H6V11a6,6,0,0,1,12,0v2H16a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1h3a3,3,0,0,0,3-3V16A3,3,0,0,0,20,13.18ZM7,15v4H5a1,1,0,0,1-1-1V16a1,1,0,0,1,1-1Zm13,3a1,1,0,0,1-1,1H17V15h2a1,1,0,0,1,1,1Z"/></svg>{{song.streamingCount}}</span>
+									</span>
+								</div>
+								<div class="album__title">
+									<h3><a href="{% url 'music_nation:album_detail' username=song.album.album_artist album=song.album.album_name %}">{{song.song_name}}</a></h3>
+									<span><a href="{% url 'music_nation:ArtistDetail' song.album.artist %}">{{song.Artist}}</a></span>
+								</div>
+								<div class="release__stat">
+								{% if song.sell == 'Sale'%}
+									<a href="#{{song.id}}" class="open-modal">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.5,19A1.5,1.5,0,1,0,10,20.5,1.5,1.5,0,0,0,8.5,19ZM19,16H7a1,1,0,0,1,0-2h8.49121A3.0132,3.0132,0,0,0,18.376,11.82422L19.96143,6.2749A1.00009,1.00009,0,0,0,19,5H6.73907A3.00666,3.00666,0,0,0,3.92139,3H3A1,1,0,0,0,3,5h.92139a1.00459,1.00459,0,0,1,.96142.7251l.15552.54474.00024.00506L6.6792,12.01709A3.00006,3.00006,0,0,0,7,18H19a1,1,0,0,0,0-2ZM17.67432,7l-1.2212,4.27441A1.00458,1.00458,0,0,1,15.49121,12H8.75439l-.25494-.89221L7.32642,7ZM16.5,19A1.5,1.5,0,1,0,18,20.5,1.5,1.5,0,0,0,16.5,19Z"/></svg>0
+									</a>
+									{% else %}
+								<span><a id="download" href="{{song.song_file.url}}" download="{{song.song_name}}" accesskey="{{song.id}}" target="{% url 'music_nation:music' %}" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Zm-9.71,1.71a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l4-4a1,1,0,0,0-1.42-1.42L13,12.59V3a1,1,0,0,0-2,0v9.59l-2.29-2.3a1,1,0,1,0-1.42,1.42Z"></path></svg></a>{{song.downloads}}</span>
+								{% endif %}
+								<span>{{song.song_genre}}</span>
+							</div>
+							</div>
+						</div>
+						
+						{% empty %}
+						{% include 'www/404.html' %}
+						{% endfor %}
+					</div>
+                    {% if not search_title %}
+					<!-- <button class="main__load" type="button">Load more</button>-->
+					{% endif %}

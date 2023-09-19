@@ -1,0 +1,167 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{% load widget_tweaks %}
+{% load embed_video_tags %}
+{% load crispy_forms_tags %}
+{%endblock%}
+{%block content%}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Contacts</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>Add Event</h1>
+					</div>
+				</div>
+				<!-- end title -->
+			</div>
+
+			<div class="row row--grid">
+				<div class="col-12 col-lg-7 col-xl-8">
+					<form action="{% url 'Event:event_terms' %}" enctype="multipart/form-data" class="sign__form sign__form--contacts" method="POST">
+						{% csrf_token %}
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">Category</label>
+									{% render_field form.ticketCategory class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">Event Name</label>
+									{% render_field form.name class="sign__input"  autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">District</label>
+									{% render_field form.district class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">Venue</label>
+									{% render_field form.venue class="sign__input"  autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">From Date</label>
+									{% render_field form.from_d class="sign__input" autocomplete="off" placeholder="yyyy-mm-d" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">From Time</label>
+									{% render_field form.from_t class="sign__input" autocomplete="off"  placeholder="10:25:28" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">To Date</label>
+									{% render_field form.to_d class="sign__input"  autocomplete="off" placeholder="yyyy-mm-d" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">To Time</label>
+									{% render_field form.to_t class="sign__input" placeholder="19:25:28"   %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">Regular Price (MKW)</label>
+									{% render_field form.regular_price class="sign__input" placeholder="Regular Price" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">VIP Price (MKW)</label>
+									{% render_field form.vip_price class="sign__input" placeholder="VIP Price" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">Capacity / Number of Tickets</label>
+									{% render_field form.number_of_tickets class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6">
+								<div class="sign__group">
+									<label class="sign__label">Youtube feed (Optional)</label>
+									{% render_field form.youtube_video_link class="sign__input" placeholder="Insert youtube link" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12">
+								<div class="sign__group">
+									{% render_field form.simple_discription class="sign__input" placeholder="Type simple discription" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12">
+								<div class="sign__group">
+									{{form.media}}
+									{% render_field form.description class="sign__input" placeholder="Type simple discription" autocomplete="off" %}
+								</div>
+							</div>
+
+							<div class="col-12">
+								<div class="sign__group">
+									{{form.media}}
+									{% render_field form.product_image class="sign__input" %}
+								</div>
+							</div>
+
+							<div class="col-12 col-xl-3">
+								<button type="submit" class="sign__btn">Send</button>
+							</div>
+						</div>
+					</form>	
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-5 col-xl-4">
+					
+				</div>
+			</div>
+
+			<!-- partners -->
+			<div class="row">
+				<div class="col-12">
+					<div class="partners owl-carousel">
+						<a href="#" class="partners__img">
+							<img src="{% static 'www/img/partners/3docean-light-background.png' %}" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- end partners -->
+		</div>
+	</main>
+	<!-- end main content -->
+ {%endblock%}

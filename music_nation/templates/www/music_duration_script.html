@@ -1,0 +1,29 @@
+<span id="duration_{{song.id}}" class="single-item__time"></span>
+<audio onloadeddata="My_Audio({{song.id}});" style="display:none;" src="{{song.song_file.url }}" id="audio__{{song.id}}" controls></audio>
+
+<script>
+
+function My_Audio(args) {
+        var id1 = 'audio__'+args;
+        var id2 = 'duration_'+args;
+        let a = formatSecondsAsTime(document.getElementById(id1).duration);
+        document.getElementById(id2).innerHTML = a;}
+
+// Makes the duration time easier to read.
+function formatSecondsAsTime(seconds) {
+    var hr  = Math.floor(seconds / 3600);
+    var min = Math.floor((seconds - (hr * 3600))/60);
+    var sec = Math.floor(seconds - (hr * 3600) -  (min * 60));
+    if (min < 10){
+        min = "0" + min;
+    }
+    if (sec < 10){
+        sec  = "0" + sec;
+    }
+    var duration = min + ':' + sec;
+    if(hr){
+        duration = hr+':'+duration;
+    }
+    return duration;
+}
+</script>

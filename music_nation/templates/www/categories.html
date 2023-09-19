@@ -1,0 +1,77 @@
+<option value="Hip-Hop/Rap">Hip-Hop/Rap</option>
+<option value="Rock">Rock</option>
+<option value="Poetry">Poetry</option>
+<option value="Dancehall">Dancehall</option>
+<option value="Afro House">Afro House</option>
+<option value="Beats">Beats</option>
+<option value="Gospel">Gospel</option>
+<option value="Amapiano">Amapiano</option>
+<option value="Raggie">Raggie</option>
+<option value="Trap">Trap</option>
+<option value="House">House</option>
+<option value="Blues">Blues</option>
+<option value="Classical">Classical</option>
+<option value="Country">Country</option>
+<option value="Electronic">Electronic</option>
+<option value="Indie">Indie</option>
+<option value="Jazz">Jazz</option>
+<option value="Latino">Latino</option>
+<option value="R&B/Soul">R&B/Soul</option>
+
+
+
+<script type="text/javascript">
+function music_cate(args){
+    $.ajax({
+        type  : "GET",
+        url   : '/music/',
+        data  : {'data_':args, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        
+
+        success : function(response){
+            $(".releases").html(response['data']);
+         
+        },
+        error :function(error){
+            //main_error();
+            alert('something is wrong')
+        }
+    })
+}
+function album_cate(args){
+    $.ajax({
+        type  : "GET",
+        url   : '/all-music/',
+        data  : {'data':args, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        
+
+        success : function(response){
+            $(".releases").html(response['data']);
+         
+        },
+        error :function(error){
+            //main_error();
+            alert('something is wrong')
+        }
+    })
+}
+
+function artist_cate(args){
+    $.ajax({
+        type  : "GET",
+        url   : '/Artists/',
+        data  : {'artists_data':args, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        
+
+        success : function(response){
+            $(".artists2").html(response['data']);
+         
+        },
+        error :function(error){
+            //main_error();
+            alert('something is wrong')
+        }
+    })
+}
+</script>
+								

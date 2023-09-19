@@ -1,0 +1,47 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<div class="col-12">
+					<div class="article article--page">
+						<!-- article content -->
+						<div class="article__content">
+							<div class="article__artist">
+								{% if Artist.profile_pic %}
+								<img src="{{Artist.profile_pic.url}}" alt="">
+								{% endif %}
+								<div>
+									<h1>{{Artist.user}}</h1>
+									<span>{{Artist.get_name}}</span>
+									<p>{{Artist.background}}</p>
+								</div>
+							</div>
+
+							<p>{{Artist.fullBiography|safe}}</p>
+
+							
+						</div>
+						<!-- end article content -->
+
+						<!-- share -->
+						<div class="share">
+							<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+                            <div class="elfsight-app-1e96d82c-7892-42db-b7f1-dc7bc9f09e9f"></div>
+						</div>
+						<!-- end share -->
+					</div>
+				</div>
+			</div>
+
+		</div>
+		{% include 'www/album-snipt.html'%}
+		{% include 'Event/event_snipt.html' %}
+	</main>
+	{% include 'Event/modal.html' %}
+	<!-- end main content -->
+{%endblock%}

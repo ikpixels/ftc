@@ -1,0 +1,103 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{% load widget_tweaks %}
+{%block content%}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe'%}">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Contacts</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>Add song</h1>
+					</div>
+				</div>
+				<!-- end title -->
+			</div>
+
+			<div class="row row--grid">
+				<div class="col-12 col-lg-7 col-xl-8">
+					<form method="POST" enctype="multipart/form-data" class="sign__form sign__form--contacts">
+						{% csrf_token %}
+						<div class="row">
+							
+
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">Song title</label>
+									{% render_field form.song_name class="sign__input" placeholder="Title" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">Song genre</label>
+									{% render_field form.song_genre class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">Artists</label>
+									{% render_field form.Artist class="sign__input" placeholder="Artists" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">Year</label>
+									{% render_field form.year class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">Free / Sale</label>
+									{% render_field form.sell class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">Price if not free</label>
+									{% render_field form.price class="sign__input" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="sign__group">
+									<label class="sign__label">MP3 / audio file</label>
+									{% render_field form.song_file class="sign__input" placeholder="Genre" autocomplete="off" %}
+								</div>
+							</div>
+							<div class="col-12 col-xl-3">
+								<button type="submit" class="sign__btn">Send</button>
+							</div>
+						</div>
+					</form>	
+				</div>
+
+				
+			</div>
+
+			<!-- partners -->
+			<div class="row">
+				<div class="col-12">
+					<div class="partners owl-carousel">
+						<a href="#" class="partners__img">
+							<img src="{% static 'www/img/partners/themeforest-light-background.png' %}" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- end partners -->
+		</div>
+	</main>
+	<!-- end main content -->
+ {%endblock%}

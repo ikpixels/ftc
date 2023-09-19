@@ -1,0 +1,161 @@
+{% extends 'www/base.html' %}
+{% load static %}
+{%block title%}
+{%endblock%}
+{%block content%}
+<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">order</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title main__title--page">
+						<h1>Tickets orders</h1>
+					</div>
+				</div>
+				<!-- end title -->
+			</div>
+
+			<div class="row row--grid">
+				
+				<div class="col-12 col-lg-12">
+					<!-- cart -->
+					<div class="main__filter">
+						<form method="GET" action="#" class="main__filter-search">
+							<input type="text" placeholder="Search..." name="q">
+							<button type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/></svg></button>
+						</form>
+
+						<div class="main__filter-wrap">
+							<select class="main__select" name="genres">
+								<option value="all">Filter</option>
+								<option value="{{c}}">Airtel Money</option>
+								<option value="{{c}}">National Bank</option>
+								<option value="{{c}}">Mphamba</option>
+								<option value="{{c}}">Approved</option>
+								<option value="{{c}}">Pedding</option>
+							</select>
+						</div>
+						<div class="slider-radio">
+							<a href="#summary" class="custom__btn" >Statics</a>
+						</div>
+					</div>
+
+					<div class="cart" id="event-order">
+						<div class="cart__table-wrap">
+							<div class="cart__table-scroll">
+								<table class="cart__table table">
+									<thead>
+										
+											<tr>
+											<td colspan="4">Time</td>
+											<td>Customer</td>
+											<td>Amount (mk)</td>
+											<td>Ref</td>
+											<td>PYT Method</td>
+											<td>acc Num</td>
+											<td>wew</td>
+											</tr>
+
+
+										
+									</thead>
+
+									<tbody>
+									
+										{% for t in orders %}
+										<tr>
+											<td colspan="4">{{t.created_at}}</td>
+											<td>
+												{{t.user}}
+											</td>
+											<td>{{t.ticket_type}}</td>
+											<td>{{t.ref}}</td>
+											<td>{{t.payment_mathod}}</td>
+											<td>{{t.account_num}}</td>
+											{% if t.paid == 'Approved' %}
+											<td>{{t.ticket_number}}</td>
+											{% else %}
+
+											{% if user.is_superuser%}
+											<td>
+												<a onclick="Aprove_pymt('{{t.id}}','{% url 'Event:approve_order' event.id %}');" href="javascript:void(0);">a</a>
+											</td>
+											{% else %}
+											<td>Pending</td>
+											{% endif %}
+											{% endif %}
+										</tr>
+										
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+					<!-- end cart -->
+				</div>
+
+				<div class="col-12 col-lg-12" id="summary">
+					<div class="hero owl-carousel" id="hero">
+						<div  class="hero__slide" data-bg="{{event.product_image.url}}">
+							<h1 class="hero__title">{{event.name}}</h1>
+							<p class="hero__text">{{event.district}},{{event.venue}}</p>
+							<table class="table table-dark table-bordered">
+								<tbody>
+									<tr>
+										<td>Number of tickets</td>
+										
+										<td>{{event.number_of_tickets}}</td>
+									</tr>
+									<tr>
+										<td>Tickets booked</td>
+										
+										<td>{{event.ticket_booked}}</td>
+									</tr>
+									<tr>
+										<td>Tickets Approved</td>
+										
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>Total amount</td>
+										
+										<td>0</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						
+					</div>
+				</div>
+				
+			</div>
+
+			<!-- partners -->
+			<div class="row">
+				<div class="col-12">
+					<div class="partners owl-carousel">
+						<a href="#" class="partners__img">
+							<img src="{% static 'www/img/partners/3docean-light-background.png' %}" alt="">
+						</a>
+
+						
+					</div>
+				</div>
+			</div>
+			<!-- end partners -->
+		</div>
+	</main>
+	<!-- end main content -->
+{%endblock%}
