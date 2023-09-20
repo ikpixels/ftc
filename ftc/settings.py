@@ -20,7 +20,7 @@ DEBUG = config("DEBUG",cast=bool)
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    #ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['*']
     ALLOWED_HOSTS = ['www.ikpixels.com']
     CSRF_TRUSTED_ORIGINS = ['https://*.ikpixels.com']
 
