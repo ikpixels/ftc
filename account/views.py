@@ -7,15 +7,17 @@ from django.contrib.auth import login, logout,authenticate
 from django.contrib.auth.decorators import user_passes_test
 from django.utils import timezone
 from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth import login
 from django.views.decorators.csrf import csrf_exempt
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from music_nation.forms import SignUpForm,CustomerForm
 from music_nation.models import Album, Song, Customer, Podcasts
 from music_nation.forms import NewAlbum, NewSong
-
 from music_nation.views import playlist_snipt,default_music_playlist
 from music_nation.forms import PodcastForm
 from Store.views import cart_snipt
@@ -23,6 +25,9 @@ from Store.models import Product,Orders
 from Event.models import Ticket
 
 # Create your views here.
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 def error_404(request,exception):
     context = {}
@@ -134,6 +139,7 @@ def profile(request):
         context['productcount'] = productcount
         context['ordercount'] = ordercount
         context['data'] = zip(ordered_products,ordered_bys,orders)
+
         return render(request, 'www/admindashboard.html',context)
 
     else:#customerlogin
@@ -176,3 +182,40 @@ def truck_ticket_order(request):
 
     context['ticket'] = booked_ticket
     return render(request,'account/truck_ticket.html',context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def adminAproveMusic(request):
+    context = {}
+
+    songs = Song.adminAprove.all().order_by('-id')[:12]
+
+    context['q_name'] = "Search release"
+    query =request.GET.get('q')
+
+    if query:
+        context['search_title'] = query
+        songs =songs.filter(Q(Artist__icontains=query)|
+                            Q(song_album__icontains=query)).distinct().order_by('-id')
+
+
+    context['songs'] =  songs
+
+
+    if is_ajax(request) and request.GET.get('data'):
+
+        song = Song.adminAprove.get(id=request.GET.get('data'))
+        album_ = Album.AdminAlbumAproval.get(id=song.song_album.id)
+        album_.aproved = True
+        album_.save()
+        song.aproved = True
+        song.save()
+
+        songs_ = Song.adminAprove.all().order_by('-id')[:12]
+        context['songs'] = songs_
+        
+        html = render_to_string('account/adminAproveMusic2.html',context)
+        return JsonResponse({'data':html})
+        
+    
+
+    return render(request,'account/adminAproveMusic.html',context)

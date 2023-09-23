@@ -11,7 +11,7 @@ urlpatterns = [
     path('@<str:username>/', music_nation_views.profile_detail, name='profile_detail'),
 
     #add new album /@username/add
-    path('@<str:username>/add/', music_nation_views.add_album, name='add_album'),
+    path('add/', music_nation_views.add_album, name='add_album'),
 
     #album's detail page /@username/album/album_name
     path('album/<slug>/', music_nation_views.album_detail, name='album_detail'),

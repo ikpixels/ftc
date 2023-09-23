@@ -15,4 +15,5 @@ urlpatterns = [
     #path('login/', LoginView.as_view(template_name='account/signin.html'), name="login"),
     #logout the current user
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('adminAproveMusic/',views.adminAproveMusic, name='adminAproveMusic'),
     ]

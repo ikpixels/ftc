@@ -1,0 +1,44 @@
+{% load static %}
+
+<div class="cart__table-scroll newTable">
+								<table class="cart__table">
+									<thead>
+										<tr>
+											<th colspan="4">ARTIST</th>
+											<th>ALBUM</th>
+											<th>ALBUM ARTWORK</th>
+											<th>SONG ARTWORK</th>
+											<th>FILE / MP3</th>
+											<th>AIM</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for s in songs %}
+										<tr>
+											<td colspan="4">{{s.Artist}}</td>
+											<td>{{s.song_album}}</td>
+
+											{% if s.song_logo %}
+											<td><a href="{{s.song_logo.url}}"><img height="50" src="{{s.song_logo.url}}"></a></td>
+											{%else%}
+											<td><img height="50" src="{% static 'www/img/ikartwork.jpg'%}"></td>
+											{% endif %}
+											{% if s.artwork %}
+											<td><img height="50" src="{{s.artwork.url}}"></td>
+											{%else%}
+											<td><img height="50" src="{% static 'www/img/ikartwork.jpg'%}"></td>
+											{% endif %}
+											<td>
+												<a data-link data-title="{{s.song_name}}" data-artist="{{s.album.album_artist}}" data-img="{% static 'www/img/covers/cover.svg'%}" href="{{ s.song_file.url }}" class="single-item__cover">
+										        <img src="{% static 'www/img/covers/cover.svg' %}" alt="">
+										        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16,2a3,3,0,0,0-3,3V19a3,3,0,0,0,6,0V5A3,3,0,0,0,16,2Zm1,17a1,1,0,0,1-2,0V5a1,1,0,0,1,2,0ZM8,2A3,3,0,0,0,5,5V19a3,3,0,0,0,6,0V5A3,3,0,0,0,8,2ZM9,19a1,1,0,0,1-2,0V5A1,1,0,0,1,9,5Z"/></svg></a>
+											</td>
+											<td>{{s.sell}}</td>
+											<td><button onclick="Song_aproval('{{p.id}}');" class="cart__delete" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg></button></td>
+										{% endfor %}
+										</tr>
+									</tbody>
+								</table>
+							</div>

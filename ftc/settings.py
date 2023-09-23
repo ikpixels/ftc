@@ -153,8 +153,8 @@ else:
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ikpixel1_ikpixelsDB',
-        'USER': 'ikpixel1_userIkpixels',
+        'NAME': 'ikpixel1_main_kako_dbase',
+        'USER': 'ikpixel1_isaac_kakodwa',
         'PASSWORD': 'Python@#992/',
         'HOST': 'localhost',
         'PORT': '3306',

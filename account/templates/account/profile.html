@@ -102,7 +102,7 @@
 
 								<div class="col-12 col-lg-6 col-xl-3">
 									<div class="stats">
-										<span>My Music<a href="{% url 'music_nation:add_album' request.user%}">Add music</a></span>
+										<span>My Music<a href="{% url 'music_nation:add_album'%}">Add music</a></span>
 										<p><b>{{musiccount}}</b></p>
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,13.18V11A8,8,0,0,0,4,11v2.18A3,3,0,0,0,2,16v2a3,3,0,0,0,3,3H8a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1H6V11a6,6,0,0,1,12,0v2H16a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1h3a3,3,0,0,0,3-3V16A3,3,0,0,0,20,13.18ZM7,15v4H5a1,1,0,0,1-1-1V16a1,1,0,0,1,1-1Zm13,3a1,1,0,0,1-1,1H17V15h2a1,1,0,0,1,1,1Z"/></svg>
 									</div>
@@ -223,7 +223,7 @@
 											<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Add Album for free</li>
 											
 										</ul>
-										<a class="plan__btn" type="button" href="{% url 'music_nation:add_album' request.user %}">Add Album</a>
+										<a class="plan__btn" type="button" href="{% url 'music_nation:add_album'%}">Add Album</a>
 									</div>
 								</div>
 

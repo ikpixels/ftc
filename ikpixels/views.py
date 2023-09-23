@@ -37,6 +37,11 @@ def music(request):
 	return render(request,'ik/music.html')
 
 
+def pricing(request):
+	context = {}
+	return render(request,'ik/pricing.html')
+
+
 @login_required(login_url ="account:login")
 @csrf_exempt
 def upload_payments(request):

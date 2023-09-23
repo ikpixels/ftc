@@ -391,11 +391,13 @@ def profile_detail(request, username):
 
 @login_required(login_url ="account:login")
 @csrf_exempt
-def add_album(request, username):
+def add_album(request):
 
     context = {}
+
     default_music_playlist(request,context)
 
+    username = request.user
 
     try:
         Subscription = PymtCode.objects.filter(active=True,customer=str(request.user),Mid='MUC').last()
@@ -448,7 +450,7 @@ def album_detail(request,slug):
     context['songs'] = songs
     context['album'] = album
     context['username'] = album.album_artist
-    context['msg_count'] = Album_comments.objects.all().count()
+    context['msg_count'] = Album_comments.objects.filter(album=album).count()
     context['msg'] = Album_comments.objects.filter(album=album).order_by('-id')[:12]
 
     if is_ajax(request):

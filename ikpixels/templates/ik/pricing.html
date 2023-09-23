@@ -1,0 +1,126 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+{%block content%}
+
+<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="index.html">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Pricing plans</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title">
+						<h1>Pricing plans</h1>
+
+						<p>Our pricing are categorized into two, we have Internal pricing and external pricing,internal pricing plan is the one charged by ikpixels company e.g Music distribution plan and events marketing plan. while external price are the once charged by owners of loyalties such as artist. this external price depend on how the owner will charge.</p>
+					</div>
+				</div>
+				<!-- end title -->
+
+				<div class="col-12 col-md-6 col-lg-4 col-xl-4">
+					<div class="feature">
+						<span class="feature__icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,7H18V6a3,3,0,0,0-3-3H5A3,3,0,0,0,2,6H2V18a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V10A3,3,0,0,0,19,7ZM5,5H15a1,1,0,0,1,1,1V7H5A1,1,0,0,1,5,5ZM20,15H19a1,1,0,0,1,0-2h1Zm0-4H19a3,3,0,0,0,0,6h1v1a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V8.83A3,3,0,0,0,5,9H19a1,1,0,0,1,1,1Z"/></svg>
+						</span>
+						<h3 class="feature__title">Create account</h3>
+						<p class="feature__text">Currently we have artist account only. Start with creating account for free.</p>
+					</div>
+				</div>
+				
+				<div class="col-12 col-md-6 col-lg-4 col-xl-4">
+					<div class="feature">
+						<span class="feature__icon">
+							<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24"><path d="M19,4.5H5a3,3,0,0,0-3,3v9a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3v-9A3,3,0,0,0,19,4.5Zm1,12a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1v-9a1,1,0,0,1,1-1H19a1,1,0,0,1,1,1Zm-4-6a3,3,0,0,0-1.51.42,3,3,0,1,0,0,5.16A3,3,0,1,0,16,10.5Zm-2.83,4a1,1,0,0,1-.17,0,1,1,0,0,1,0-2,1,1,0,0,1,.17,0,2.8,2.8,0,0,0,0,1.92Zm2.83,0a1,1,0,1,1,1-1A1,1,0,0,1,16,14.5Z"/></svg>
+						</span>
+						<h3 class="feature__title">Choose your plan</h3>
+						<p class="feature__text">Choose your plan,we have three plans under internal pricing plan, Music distribution plan (MUP), Event marketing plan (EUP) and Video distribution.</p>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4 col-xl-4">
+					<div class="feature">
+						<span class="feature__icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,2H10A3,3,0,0,0,7,5v7a3,3,0,0,0,3,3H20a3,3,0,0,0,3-3V5A3,3,0,0,0,20,2Zm1,10a1,1,0,0,1-1,1H10a1,1,0,0,1-1-1V5a1,1,0,0,1,1-1H20a1,1,0,0,1,1,1ZM17.5,8a1.49,1.49,0,0,0-1,.39,1.5,1.5,0,1,0,0,2.22A1.5,1.5,0,1,0,17.5,8ZM16,17a1,1,0,0,0-1,1v1a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V15H4a1,1,0,0,0,0-2H3V12a1,1,0,0,1,1-1A1,1,0,0,0,4,9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H14a3,3,0,0,0,3-3V18A1,1,0,0,0,16,17ZM6,18H7a1,1,0,0,0,0-2H6a1,1,0,0,0,0,2Z"/></svg>
+						</span>
+						<h3 class="feature__title">Make money</h3>
+						<p class="feature__text">With your plan, upload your music and events and Make money from it. Ikpixels will only take 10 percent from your revenue at the end of month.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row row--grid">
+				<!-- title -->
+				<div class="col-12">
+					<div class="main__title">
+						<h2>Select Your Plan</h2>
+					</div>
+				</div>
+				<!-- end title -->
+
+				<div class="col-12 col-md-6 col-lg-4 order-md-2 order-lg-1">
+					<div class="plan plan--green">
+						<h3 class="plan__title">Music distribution - MUP</h3>
+						<span class="plan__price">MK 500<span> / song</span></span>
+						<ul class="plan__list">
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>1 song</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>With artwork</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Free support</li>
+						</ul>
+						<a class="plan__btn" href="{% url 'ikpixels:pricing'%}">Get started</a>
+					</div>
+				</div>
+
+				<div class="col-12 col-lg-4 order-md-1 order-lg-2">
+					<div class="plan plan--red">
+						<h3 class="plan__title">Event-tickets marketing</h3>
+						<span class="plan__price">MK 500 <span> / event </span></span>
+						<ul class="plan__list">
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg> Unlimited event tickets </li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Event banner</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Free support</li>
+						</ul>
+						<a class="plan__btn" href="{% url 'ikpixels:pricing'%}">Get started</a>
+						>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4 order-md-3 order-lg-3">
+					<div class="plan plan--purple">
+						<h3 class="plan__title">Youtube feed</h3>
+						<span class="plan__price">Free<span> / video</span></span>
+						<ul class="plan__list">
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Unlimited youtube feed</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Full support</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Social media sharing</li>
+						</ul>
+						<a class="plan__btn" href="{% url 'ikpixels:pricing'%}">Get started</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- partners -->
+			<div class="row">
+				<div class="col-12">
+					<div class="partners owl-carousel">
+						<a href="#" class="partners__img">
+							<img src="{% static 'www/img/partners/3docean-light-background.png' %}" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- end partners -->
+		</div>
+	</main>
+	<!-- end main content -->
+
+{% endblock %}

@@ -158,6 +158,18 @@ FREE_OR_NOT =(
       ('Sale','Sale'),
     )
 
+
+class AlbumObjectManager(models.Manager):
+    def get_queryset(self):
+        album = super(AlbumObjectManager, self).get_queryset().filter( aproved=True)
+        return album
+
+
+class AdminAlbumObjectManager(models.Manager):
+    def get_queryset(self):
+        songs = super(AdminAlbumObjectManager, self).get_queryset().filter(aproved=False)
+        return songs
+
 # Create your models here.
 class Album(models.Model):
     album_name = models.CharField(max_length=30)
@@ -173,8 +185,12 @@ class Album(models.Model):
     slug = models.SlugField(unique=True,null=True,blank=True)
     price = models.DecimalField(max_digits=18, decimal_places=2,default=0.00)
     album_artist = models.ForeignKey(User, on_delete=models.CASCADE, related_name='albums')
+    aproved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = AlbumObjectManager()
+    AdminAlbumAproval = AdminAlbumObjectManager()
 
     def __str__(self):
         return self.album_name
@@ -220,6 +236,16 @@ class Album_comments(models.Model):
         return 'msg'
 
 
+class SongObjectManager(models.Manager):
+    def get_queryset(self):
+        songs = super(SongObjectManager, self).get_queryset().filter(aproved=True)
+        return songs
+
+class AdminSongObjectManager(models.Manager):
+    def get_queryset(self):
+        songs = super(AdminSongObjectManager, self).get_queryset().filter(aproved=False)
+        return songs
+
 
 class Song(models.Model):
     song_name = models.CharField(max_length=40)
@@ -235,8 +261,12 @@ class Song(models.Model):
     sell  = models.CharField(choices=FREE_OR_NOT,max_length=100)
     most_sold = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=18, decimal_places=2,default=0.00)
+    aproved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = SongObjectManager()
+    adminAprove = AdminSongObjectManager()
 
     def __str__(self):
         return self.song_name +' '+ str(self.song_album)
