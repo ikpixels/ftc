@@ -14,10 +14,10 @@ urlpatterns = [
     path('@<str:username>/add/', music_nation_views.add_album, name='add_album'),
 
     #album's detail page /@username/album/album_name
-    path('@<str:username>/album/<str:album>/', music_nation_views.album_detail, name='album_detail'),
+    path('album/<slug>/', music_nation_views.album_detail, name='album_detail'),
 
     #add songs to the albums
-    path('@<str:username>/album/<str:album>/add/', music_nation_views.add_song, name='add_song'),
+    path('Song/<int:id>/', music_nation_views.add_song, name='add_song'),
 
     path('about/',music_nation_views.about,name="about"),
 
@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('Artists/',music_nation_views.Artist,name="Artists"),
 
-    path('Artist/<int:id>/',music_nation_views.ArtistDetail,name="ArtistDetail"),
+    path('Artist/<slug>/',music_nation_views.ArtistDetail,name="ArtistDetail"),
 
     path('contacts/',music_nation_views.Contacts,name="contacts"),
 

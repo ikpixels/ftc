@@ -14,6 +14,7 @@ from . models import category
 from Event.models import Ticket
 from . import forms,models
 from music_nation.models import Customer
+
 from music_nation.views import playlist_snipt,default_music_playlist
 
 
@@ -33,6 +34,7 @@ def store(request):
     playlist_snipt(request,context)
     default_music_playlist(request,context)
     cart_snipt(request,context)
+
 
     context['category'] = category.objects.all()
 

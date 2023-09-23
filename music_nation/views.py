@@ -25,7 +25,7 @@ from .forms import NewAlbum, NewSong
 from Store.models import Product,Orders
 from Event.models import Ticket
 from music_nation import snipt
-
+#from Store.views import cart_snipt
 from ikpixels.models import MusicorEventPayment,PymtCode
 
 import authorize
@@ -189,13 +189,13 @@ def Artist(request):
 
 #........................................................#
 
-def ArtistDetail(request,id):
+def ArtistDetail(request,slug):
     context = {}
 
     playlist_snipt(request,context)
     default_music_playlist(request,context)
 
-    Artist = Customer.objects.get(id=id)
+    Artist = Customer.objects.get(slug=slug)
     context['Artist'] = Artist
 
     albums = Album.objects.filter(album_artist=Artist.user)
@@ -349,6 +349,7 @@ def about(request):
     default_music_playlist(request,context)
     return render(request, 'www/about.html',context)
 #........................................................#
+@login_required(login_url ="account:login")
 @csrf_exempt
 def updateCustomer(request,id):
     context = {}
@@ -364,7 +365,7 @@ def updateCustomer(request,id):
         customerForm = CustomerForm(request.POST,request.FILES, instance=Artist)
         if customerForm.is_valid():
             customerForm.save()
-            return redirect('music_nation:ArtistDetail', id=Artist.id)
+            return redirect('music_nation:ArtistDetail', slug=Artist.slug)
 
     return render(request, 'www/updateCustomer.html',context)
 
@@ -384,8 +385,6 @@ def profile_detail(request, username):
     context['albums'] = albums
     context['username'] = username
 
-
-
     return render(request, 'www/useralbum-list.html',context)
 
 #........................................................#
@@ -399,7 +398,11 @@ def add_album(request, username):
 
 
     try:
-        Subscription = PymtCode.objects.get(customer=request.user).code
+        Subscription = PymtCode.objects.filter(active=True,customer=str(request.user),Mid='MUC').last()
+        if Subscription:
+            pass
+        else:
+            return redirect('ikpixels:upload_payment')
     except PymtCode.DoesNotExist:
         return redirect('ikpixels:upload_payment')
 
@@ -429,7 +432,7 @@ def add_album(request, username):
 
 #........................................................#
 @csrf_exempt
-def album_detail(request,username, album):
+def album_detail(request,slug):
 
     context = {}
 
@@ -437,14 +440,14 @@ def album_detail(request,username, album):
     playlist_snipt(request,context)
 
     #show album details here. single album's details.
-    album = get_object_or_404(Album, album_name=album)
-    songs = get_object_or_404(User, username=username)
+    album = get_object_or_404(Album, slug=slug)
+    songs = get_object_or_404(User, username=album.album_artist)
     songs = songs.albums.get(album_name=str(album))
     songs = songs.songs.all()
 
     context['songs'] = songs
     context['album'] = album
-    context['username'] = username
+    context['username'] = album.album_artist
     context['msg_count'] = Album_comments.objects.all().count()
     context['msg'] = Album_comments.objects.filter(album=album).order_by('-id')[:12]
 
@@ -453,22 +456,13 @@ def album_detail(request,username, album):
             body = request.GET.get('text'),
             user = request.user,album = album)
         msg.save()
-        context['msg_count'] = Album_comments.objects.all().count()
+        context['msg_count'] = Album_comments.objects.filter(album=album).count()
         context['msg'] = Album_comments.objects.filter(album=album).order_by('-id')[:12]
         html = render_to_string('www/music_msg.html',context)
         return JsonResponse({'data':html})
 
-    #context['form'] = PaymentForm()# payment method for album
 
-    '''if request.method == 'POST':
-        download_code = snipt.secret_code()
-        d_id = request.GET.get('d_id')
-        cc_number = request.GET.get('cc_number')
-        cc_expiry = request.GET.get('cc_expiry')
-        cc_code = request.GET.get('cc_code')
-        print(download_code);'''
-
-    context['other_releases'] = Album.objects.exclude(album_name=album)[:6]
+    #context['other_releases'] = Album.objects.exclude(album_name=album)[:6]
 
     return render(request, 'www/release.html',context)
 
@@ -477,7 +471,7 @@ def album_detail(request,username, album):
 
 @login_required(login_url ="account:login")
 @csrf_exempt
-def add_song(request, username, album):
+def add_song(request,id):
 
     context = {}
 
@@ -486,24 +480,23 @@ def add_song(request, username, album):
     default_music_playlist(request,context)
 
     try:
-        Subscription = PymtCode.objects.get(customer=request.user).code
+        Subscription = PymtCode.objects.filter(active=True,customer=str(request.user),Mid='MUC').last()
+        if Subscription:
+            pass
+        else:
+            return redirect('ikpixels:upload_payment')
     except PymtCode.DoesNotExist:
         return redirect('ikpixels:upload_payment')
 
-    user = get_object_or_404(User, username=username)
-
-    default_music_playlist(request,context)
-
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(User, username=request.user)
 
     if request.user == user:
 
-        album_get = Album.objects.get(album_name=album)
+        album_get = Album.objects.get(id=id)
 
         if request.method == 'POST':
             form = NewSong(request.POST, request.FILES)
             if form.is_valid():
-                # form.save(commit='False')
                 song = Song.objects.create(
                     song_name = form.cleaned_data.get('song_name'),
                     Artist =form.cleaned_data.get('Artist'),
@@ -512,19 +505,21 @@ def add_song(request, username, album):
                     sell = form.cleaned_data.get('sell'),
                     price = form.cleaned_data.get('price'),
                     song_genre = form.cleaned_data.get('song_genre'),
+                    artwork = form.cleaned_data.get('artwork'),
                     song_album = album_get
-
                 )
                 album_get.songsNum += 1
                 album_get.save()
-                return redirect('music_nation:album_detail', username=username, album=album)
+                Subscription.active=False
+                Subscription.save()
+                return redirect('music_nation:album_detail', slug=album_get.slug)
 
         else:
             form = NewSong()
             context['form'] = form
             return render(request, 'www/add_new_song.html',context)
     else:
-        return redirect('music_nation:album_detail', username=username, album=album)
+        return redirect('music_nation:album_detail', slug=album_get.slug)
 
 
 @csrf_exempt
@@ -534,6 +529,7 @@ def podcasts(request):
 
     playlist_snipt(request,context)
     default_music_playlist(request,context)
+
     podcasts = Podcasts.objects.all().order_by('-id')
 
     query =request.GET.get('q')

@@ -16,7 +16,7 @@
 									</span>
 								</div>
 								<div class="album__title">
-									<h3><a href="{% url 'music_nation:album_detail' username=song.album.album_artist album=song.album.album_name %}">{{song.song_name}}</a></h3>
+									<h3><a href="{% url 'music_nation:album_detail' song.album.slig%}">{{song.song_name}}</a></h3>
 									<span><a href="{% url 'music_nation:ArtistDetail' song.album.artist %}">{{song.Artist}}</a></span>
 								</div>
 								<div class="release__stat">

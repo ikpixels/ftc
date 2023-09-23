@@ -262,15 +262,15 @@
 
 		<div class="sign__group sign__group--row">
 			<label class="sign__label" for="value">Category:</label>
-			{% render_field form.category class="sign__input" autocomplete="off" %}
+			{{form.category|add_class:"sign__input"}}
 		</div>
 		<div class="sign__group sign__group--row">
 			<label class="sign__label" for="value">Title:</label>
-			{% render_field form.title class="sign__input" autocomplete="off" %}
+			{{form.title|add_class:"sign__input"}}
 		</div>
 		<div class="sign__group sign__group--row">
 			<label class="sign__label" for="value">Youtube link:</label>
-			{% render_field form.youtubelink class="sign__input" autocomplete="off" placeholder="https://www.youtube.com/watch?v=GxZfn38_HsM" %}
+			{{form.youtubelink|add_class:"sign__input"}}
 		</div>
 		<button class="sign__btn" type="submit">Send</button>
 	</form>

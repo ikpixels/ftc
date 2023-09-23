@@ -1,0 +1,31 @@
+{% load embed_video_tags %}
+{% load static %}
+<div class="cart__table-scroll">
+	<table class="cart__table">
+									<thead>
+										<tr>
+											<th>NAME</th>
+											<th>AMOUNT</th>
+											<th>PYMT TYPE</th>
+											<th>PYMT METHOD</th>
+											<th>PHONE</th>
+											<th>REF</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for p in payment %}
+										<tr>
+											<td>{{p.name}}</td>
+											<td>{{p.amount}}</td>
+											<td>{{p.category}}</td>
+											<td>{{p.payment_method}}</td>
+											<td>{{p.phone}}</td>
+											<td>{{p.PaymentReferenceNumber}}</td>
+											<td><button onclick="Main_payment_aproval('{{p.id}}');" class="cart__delete" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg></button></td>
+										{% endfor %}
+										</tr>
+									</tbody>
+								</table>
+							</div>

@@ -8,4 +8,4 @@ from . models import PymtCode,MusicorEventPayment
 class SubscriptionUploadForm(forms.ModelForm):
     class Meta:
         model= MusicorEventPayment
-        fields=['category','payment_method','amount','PaymentReferenceNumber']
+        fields=['category','payment_method','amount','PaymentReferenceNumber','name','phone']

@@ -2,57 +2,123 @@
 {% load static %}
 {% load widget_tweaks %}
 {%block content%}
-	<!-- main content -->
+<!-- main content -->
 	<main class="main">
 		<div class="container-fluid">
 			<div class="row row--grid">
 				<!-- breadcrumb -->
 				<div class="col-12">
 					<ul class="breadcrumb">
-						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe' %}">Home</a></li>
-						<li class="breadcrumb__item breadcrumb__item--active">Subscribe</li>
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Payment|{{request.user}}</li>
 					</ul>
 				</div>
 				<!-- end breadcrumb -->
+			</div>
 
-				<!-- registration form -->
+			<div class="row row--grid">
+				<div class="col-12 col-lg-8">
+					<!-- cart -->
+					<div class="cart">
+						<div class="cart__table-wrap">
+							<div class="row row--grid">
+				<!-- title -->
 				<div class="col-12">
-					<div class="sign">
-						<div class="sign__content">
-							<form action="#" method="post" class="sign__form">
-								{%csrf_token%}
-								<a href="/" class="sign__logo">
-									<img src="{% static 'www/img/logo.png' %}" alt="">
-								</a>
+					<div class="main__title">
+						<h2>Mobile payment</h2>
+					</div>
+				</div>
+				<!-- end title -->
+
+				<div class="col-12 col-md-6 col-lg-6 order-md-2 order-lg-1">
+					<div class="plan plan--purple">
+						<h3 class="plan__title">TNM Mpamba - 088 293 5706</h3>
+						<p> </p>
+						<span class="plan__price">MK500<span> / upload</span></span>
+						<ul class="plan__list">
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Dial *444#</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Select 1 for send money</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Select 1 for TNM Mpamba</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Select 1 for send to wallet then enter the phone number 088 293 5706</li>
+						</ul>
+					
+					</div>
+				</div>
+
+				<div class="col-12 col-lg-6 order-md-1 order-lg-2">
+					<div class="plan plan--green">
+						<h3 class="plan__title">Airtel Money - 099 334 4416</h3>
+						<span class="plan__price">MK500<span> / upload</span></span>
+						<ul class="plan__list">
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Dial *211#</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Select 2 for send money</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Select 1 for Airtel Money</li>
+							<li class="green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>Select 1 for send to wallet then enter the phone number 099 334 4416</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-12 order-md-3 order-lg-3">
+					<div class="plan">
+						<p style="color:white;">National Bank :: 1004820758</p>
+						<p style="color:white;">Using the reference number/ transaction number from any of the payment mediums above kindly complete the form below.</p>
+					</div>
+				</div>
+			</div>
+						</div>
+
+						<div class="cart__info">
+							<div class="cart__systems">
+								<a class="mr-2"><img height="40" src="{% static 'www/img/airtel.jpg' %}"></a>
+								<a class="mr-2"><img height="40" src="{% static 'www/img/nb.jpg' %}"></a>
+								<a class="mr-2"><img height="40" src="{% static 'www/img/tnm.jpg' %}"></a>
+							</div>
+						</div>
+					</div>
+					<!-- end cart -->
+				</div>
+
+				<div class="col-12 col-lg-4">
+					<!-- checkout -->
+					<form action="#" method="POST" class="sign__form sign__form--cart">
+						<h4 class="sign__title">Checkout</h4>
+						                 {%csrf_token%}
+								<div class="sign__group">
+									<label class="sign__label">Name</label>
+									{{form.name|add_class:"sign__input"}}
+								</div>
+
+								<div class="sign__group">
+									<label class="sign__label">Phone</label>
+									{{form.phone|add_class:"sign__input"}}
+								</div>
 
 								<div class="sign__group">
 									<label class="sign__label">Subscription type</label>
-									{% render_field form.category class="sign__input" autocomplete="off" %}
+									{{form.category|add_class:"sign__input"}}
 								</div>
 
 								<div class="sign__group">
 									<label class="sign__label">Payment method</label>
-									{% render_field form.payment_method class="sign__input" autocomplete="off" %}
+									{{form.payment_method|add_class:"sign__input"}}
 								</div>
 
 								<div class="sign__group">
 									<label class="sign__label">Amount paid - MK</label>
-									{% render_field form.amount class="sign__input" placeholder="Email" autocomplete="off" %}
+									{{form.amount|add_class:"sign__input"}}
 								</div>
 
 								<div class="sign__group">
 									<label class="sign__label">Payment Reference Number</label>
-									{% render_field form.PaymentReferenceNumber class="sign__input" autocomplete="off" %}
+									 {{form.PaymentReferenceNumber|add_class:"sign__input"}}
 								</div>
 								<button class="sign__btn" type="submit">Subscribe</button>
-							</form>
-						</div>
-					</div>
+						
+					</form>
+					<!-- end checkout -->
 				</div>
-				<!-- end registration form -->
 			</div>
 		</div>
 	</main>
-	<!-- end main content -->
 
 {%endblock%}

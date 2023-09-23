@@ -13,25 +13,33 @@ CATEGORY = (
 
 PAYMENT_METHOD= (
 	('TNM','TNM Mpamba'),
-	('Airtel','Aitel Money'),
+	('Airtel','Airtel Money'),
 	('NB','National Bank')
 	)
 
-#MUC(Music Upload code uplode),MDC(Music download code),
+#MUC(Music Upload code uplode),MDC(Music download code),EUC(Event upload code),
 class PymtCode(models.Model):
-	Mid = models.CharField(max_length=100,null=True,blank=True)# for music id
+	codeOwner = models.CharField(max_length=100,null=True,blank=True)# property rights
+	codeOwnerNumber = models.CharField(max_length=100,null=True,blank=True)
+	Mid = models.CharField(max_length=100,null=True,blank=True)# for item id
 	customer = models.CharField(max_length=100)
+	codeValue =  models.DecimalField(max_digits=18, decimal_places=2,default=0.00)
 	code = models.CharField(max_length=100,null=True,blank=True)
+	paid = models.BooleanField(default= False) #if owner received money
+	active = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.code
+		return  self.Mid + '-' + self.code 
 
 class MusicorEventPayment(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	payment_method = models.CharField(max_length=40,choices=PAYMENT_METHOD)
+	name = models.CharField(max_length=100)
+	phone = models.CharField(max_length=100)
 	amount = models.DecimalField(max_digits=18, decimal_places=2,default=0.00)
 	category = models.CharField(max_length=40,choices=CATEGORY)
 	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 	PaymentReferenceNumber =models.CharField(max_length=100)
 	aprove = models.BooleanField(default=False)
 

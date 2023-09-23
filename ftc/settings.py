@@ -1,7 +1,7 @@
 import os
 import cloudinary
 import dj_database_url
-from decouple import config
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -12,15 +12,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRETKEY")
+SECRET_KEY = "django-insecure-jrvd14_9qr_r(cm*zamwl-lr^9+%5kz!ij+a=y!mmt&q32@z(m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG",cast=bool)
+DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = ['*']
     ALLOWED_HOSTS = ['www.ikpixels.com']
     CSRF_TRUSTED_ORIGINS = ['https://*.ikpixels.com']
 
@@ -121,13 +120,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
+else:#for CPANEL HOSTING-Media will be saved to public_html
+    MEDIA_ROOT = "/home/ikpixel1/public_html/media"
+    MEDIA_URL = "/media/"
 
 
 
@@ -138,16 +140,6 @@ LOGOUT_REDIRECT_URL = 'music_nation:nyansavibe'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-cloudinary.config( 
-  cloud_name = config("cloud_name"), 
-  api_key = config("api_key"), 
-  api_secret = config("api_secret") 
-)
-
-
-STRIPE_PUBLISHABLE_KEY = config("STRIPE_PUBLISHABLE_KEY")
-STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -158,5 +150,18 @@ if DEBUG:
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }}
 else:
-    DATABASE_URL = config("DATABASE_URL")
-    DATABASES = {"default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),}
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ikpixel1_ikpixelsDB',
+        'USER': 'ikpixel1_userIkpixels',
+        'PASSWORD': 'Python@#992/',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+
+    },
+    }
+    }

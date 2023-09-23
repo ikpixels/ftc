@@ -1,0 +1,76 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{%block content%}
+<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Payments|{{request.user}}</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+			<div class="row row--grid">
+				<div class="col-12 col-lg-12">
+					<!-- cart -->
+					<div class="cart">
+						<div class="cart__table-wrap">
+							<div class="cart__table-scroll">
+								<table class="cart__table">
+									<thead>
+										<tr>
+											<th>NAME</th>
+											<th>AMOUNT</th>
+											<th>PYMT TYPE</th>
+											<th>PYMT METHOD</th>
+											<th>PHONE</th>
+											<th>REF</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for p in payment %}
+										<tr>
+											<td>{{p.name}}</td>
+											<td>{{p.amount}}</td>
+											<td>{{p.category}}</td>
+											<td>{{p.payment_method}}</td>
+											<td>{{p.phone}}</td>
+											<td>{{p.PaymentReferenceNumber}}</td>
+											<td><button onclick="Main_payment_aproval('{{p.id}}');" class="cart__delete" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg></button></td>
+										{% endfor %}
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- end cart -->
+				</div>
+			</div>
+		</div>
+	</main>
+
+<script type="text/javascript">
+	function Main_payment_aproval(id){
+        
+        $.ajax({
+        type  : "GET",
+        url   : '/ikpixelsuprove_upload_pymt/',
+        data  : {'data':id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        
+
+        success : function(response){
+            $(".cart__table-scroll").html(response['data']);  
+        },
+        error :function(error){
+            alert('Something went wrong');
+        }
+    })
+	}
+</script>
+{% endblock content %}

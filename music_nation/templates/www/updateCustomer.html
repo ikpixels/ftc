@@ -62,58 +62,72 @@
 
 											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 												<div class="sign__group">
-													{% render_field form.address class="sign__input" placeholder="Adress" autocomplete="off" %}
+													<label class="sign__label" for="lastname">Account type</label>
+													{{form.address|add_class:"sign__input"}}
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 												<div class="sign__group">
-													{% render_field form.account_type class="sign__input" placeholder="Account Type" autocomplete="off" %}
+													<label class="sign__label" for="lastname">Account type</label>
+													{{form.account_type|add_class:"sign__input"}}
+													
 												</div>
 											</div>
 
 											
 											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 												<div class="sign__group">
-													{% render_field form.mobile class="sign__input" placeholder="Contact" autocomplete="off" %}
+													<label class="sign__label" for="lastname">picture (500X500)</label>
+													{{form.mobile|add_class:"sign__input"}}
+													
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 												<div class="sign__group">
-													{% render_field form.fb class="sign__input" placeholder="FB Link" autocomplete="off" %}
+													<label class="sign__label" for="lastname">FB link</label>
+													{{form.fb|add_class:"sign__input"}}
+													
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 												<div class="sign__group">
-													{% render_field form.tweeter class="sign__input" placeholder="Tweeter Link" autocomplete="off" %}
+													<label class="sign__label" for="lastname">tweeter link</label>
+													{{form.tweeter|add_class:"sign__input"}}
+													
 												</div>
 											</div>
 
 											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 												<div class="sign__group">
-													{% render_field form.instagram class="sign__input" placeholder="Instagram Link" autocomplete="off" %}
+													<label class="sign__label" for="lastname">instagram link</label>
+													{{form.instagram|add_class:"sign__input"}}
+									
 												</div>
 											</div>
 
 											<div class="col-12 col-md-12 col-lg-12 col-xl-12">
 												<div class="sign__group">
-													{% render_field form.background class="sign__input" placeholder="Background"  autocomplete="off" %}
+													<label class="sign__label" for="lastname">Simple background </label>
+													{{form.background|add_class:"sign__input"}}
 												</div>
 											</div>
 
 											<div class="col-12 col-md-12 col-lg-12 col-xl-12">
 												<div class="sign__group">
+													<label class="sign__label" for="lastname">Full Biography</label>
 													{{form.media}}
-													{% render_field form.fullBiography class="sign__input"  autocomplete="off" %}
+													{{form.fullBiography|add_class:"sign__input"}}
+													
 												</div>
 											</div>
 
 											<div class="col-12 col-md-12 col-lg-12 col-xl-12">
 												<div style="color:white;" class="sign__group">
 													<label class="sign__label" for="lastname">Profile picture</label><br><br><br>
-													{% render_field form.profile_pic %}
+													{{form.profile_pic|add_class:"sign__input"}}
 												</div>
 											</div>
 

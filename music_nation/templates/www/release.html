@@ -63,8 +63,8 @@
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16,2a3,3,0,0,0-3,3V19a3,3,0,0,0,6,0V5A3,3,0,0,0,16,2Zm1,17a1,1,0,0,1-2,0V5a1,1,0,0,1,2,0ZM8,2A3,3,0,0,0,5,5V19a3,3,0,0,0,6,0V5A3,3,0,0,0,8,2ZM9,19a1,1,0,0,1-2,0V5A1,1,0,0,1,9,5Z"/></svg>
 									</a>
 									<div class="single-item__title">
-										<h4><a href="{% url 'music_nation:album_detail' username=album.album_artist album=album.album_name %}">{{song.song_name}}</a></h4>
-										<span><a href="{% url 'music_nation:ArtistDetail' album.artist %}">by {{song.Artist}}</a></span>
+										<h4><a href="{% url 'music_nation:album_detail' album.slug %}">{{song.song_name}}</a></h4>
+										<span><a href="{% url 'music_nation:ArtistDetail' song.artst_url %}">by {{song.Artist}}</a></span>
 									</div>
 									<a href="{% url 'music_nation:add-to-playlist' song.id %}" class="single-item__add">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"/></svg>
@@ -75,7 +75,7 @@
 									</a>
 									{% else %}
 									{% if album.songsNum > 1 %}
-									<a id="download" href="{{song.song_file.url}}" download="{{song.song_name}}" accesskey="{{song.id}}" target="{% url 'music_nation:music' %}" class="single-item__export">
+									<a id="download" href="{{song.song_file.url}}" download="{{song.song_name}}" accesskey="{{song.id}}" target="{%url 'music_nation:music'%}" class="single-item__export">
 										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Zm-9.71,1.71a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l4-4a1,1,0,0,0-1.42-1.42L13,12.59V3a1,1,0,0,0-2,0v9.59l-2.29-2.3a1,1,0,1,0-1.42,1.42Z"></path></svg>
 									</a>
 									{% endif %}
@@ -106,8 +106,20 @@
 
 						<!-- share -->
 						<div class="share">
-							<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-                            <div class="elfsight-app-1e96d82c-7892-42db-b7f1-dc7bc9f09e9f"></div>
+							<!-- AddToAny BEGIN -->
+                           <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                                <!--<a class="a2a_dd" href="https://www.addtoany.com/share"></a>-->
+                                <a class="a2a_button_facebook"></a>
+                                <a class="a2a_button_whatsapp"></a>
+                                <a class="a2a_button_linkedin"></a>
+                                <a class="a2a_button_twitter"></a>
+                                <a class="a2a_button_email"></a>
+                                <a class="a2a_button_google_gmail"></a>
+                                <a class="a2a_button_pinterest"></a>
+                                <a class="a2a_button_telegram"></a>
+                            </div>
+                            <script async src="https://static.addtoany.com/menu/page.js"></script>
+                            <!-- AddToAny END -->
 						</div>
 						<!-- end share -->
 
@@ -134,7 +146,7 @@
 							</ul>
 						    </div>
 
-							<form action="{% url 'music_nation:album_detail' username=album.album_artist album=album.album_name %}" method="GET" class="comments__form" id="comments__form">
+							<form action="{% url 'music_nation:album_detail' album.slug %}" method="GET" class="comments__form" id="comments__form">
 								{% csrf_token %}
 								<div class="sign__group">
 									<textarea id="text" name="text" class="sign__textarea" placeholder="Add comment"></textarea>
@@ -167,15 +179,15 @@
 							<div class="album album--sidebar">
 								<div class="album__cover">
 									<img src="{{song.album_logo.url}}" alt="">
-									<a href="{% url 'music_nation:album_detail' username=song.album_artist album=song.album_name %}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg></a>
+									<a href="{% url 'music_nation:album_detail' song.album_name.slug %}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg></a>
 									<span class="album__stat">
 										<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.71,16.29a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21,1,1,0,0,0-.21.33,1,1,0,0,0,.21,1.09,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1,1,0,0,0,.21-1.09A1,1,0,0,0,3.71,16.29ZM7,8H21a1,1,0,0,0,0-2H7A1,1,0,0,0,7,8ZM3.71,11.29a1,1,0,0,0-1.09-.21,1.15,1.15,0,0,0-.33.21,1,1,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21.94.94,0,0,0,.76,0,1.15,1.15,0,0,0,.33-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1,1,0,0,0,3.71,11.29ZM21,11H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2ZM3.71,6.29a1,1,0,0,0-.33-.21,1,1,0,0,0-1.09.21,1.15,1.15,0,0,0-.21.33.94.94,0,0,0,0,.76,1.15,1.15,0,0,0,.21.33,1.15,1.15,0,0,0,.33.21,1,1,0,0,0,1.09-.21,1.15,1.15,0,0,0,.21-.33.94.94,0,0,0,0-.76A1.15,1.15,0,0,0,3.71,6.29ZM21,16H7a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"/></svg> 22</span>
 										<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,13.18V11A8,8,0,0,0,4,11v2.18A3,3,0,0,0,2,16v2a3,3,0,0,0,3,3H8a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1H6V11a6,6,0,0,1,12,0v2H16a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1h3a3,3,0,0,0,3-3V16A3,3,0,0,0,20,13.18ZM7,15v4H5a1,1,0,0,1-1-1V16a1,1,0,0,1,1-1Zm13,3a1,1,0,0,1-1,1H17V15h2a1,1,0,0,1,1,1Z"/></svg><p id="duration"></p></span>
 									</span>
 								</div>
 								<div class="album__title">
-									<h3><a href="{% url 'music_nation:album_detail' username=album.album_artist album=album.album_name %}">{{album.album_name}}</a></h3>
-									<span><a href="{% url 'music_nation:ArtistDetail' album.artist %}">{{album.album_artist}}</a></span>
+									<h3><a href="{% url 'music_nation:album_detail' album.album_artist.slug %}">{{album.album_name}}</a></h3>
+									<span><a href="{% url 'music_nation:ArtistDetail' song.artst_url %}">{{album.album_artist}}</a></span>
 								</div>
 							</div>
 						</div>

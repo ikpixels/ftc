@@ -38,7 +38,9 @@ def signup(request):
 
     context = {}
 
+    playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
     
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -72,7 +74,11 @@ def signup(request):
 @csrf_exempt
 def login_view(request):
     context = {}
+
+    playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
+
     if request.method =="POST":
         username = request.POST['name']
         password = request.POST['pass']
@@ -91,8 +97,10 @@ def login_view(request):
 @csrf_exempt
 def profile(request):
     context = {}
+
     playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
 
     Form = PodcastForm()
     if request.method == 'POST':
@@ -156,7 +164,9 @@ def profile(request):
 def truck_ticket_order(request):
 
     context = {}
+    playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
     context['q_name'] = "Search order"
 
     if request.user.is_superuser:

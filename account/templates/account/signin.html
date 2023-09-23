@@ -9,15 +9,8 @@
 				<!-- breadcrumb -->
 				<div class="col-12">
 					<ul class="breadcrumb">
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe' %}">Home</a></li>
-=======
-						<li class="breadcrumb__item"><a href="/">Home</a></li>
->>>>>>> b786747645b2e82a61eab8fa05eb58aa227a7aee
-=======
-						<li class="breadcrumb__item"><a href="/">Home</a></li>
->>>>>>> b786747645b2e82a61eab8fa05eb58aa227a7aee
 						<li class="breadcrumb__item breadcrumb__item--active">Sign in</li>
 					</ul>
 				</div>
@@ -30,7 +23,7 @@
 							<!-- authorization form -->
 							<form action="{% url 'account:login'%}" method="post" class="sign__form">
 								{% csrf_token %}
-								<a href="/" class="sign__logo">
+								<a href="{% url 'music_nation:nyansavibe' %}" class="sign__logo">
 									<img src="{% static 'www/img/logo.png' %}" alt="">
 								</a>
 

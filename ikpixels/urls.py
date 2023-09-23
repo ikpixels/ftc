@@ -9,4 +9,6 @@ urlpatterns = [
     path('ticket/',views.ticket,name='ticket'),
     path('music/',views.music,name='music'),
     path('upload_payment/',views.upload_payments,name='upload_payment'),
+    path('uprove_upload_pymt/',views.uprove_upload_pymt,name='uprove_upload_pymt'),
+    path('payment/success/', LoginView.as_view(template_name='ik/payment_success.html'), name="payment_success"),
     ]

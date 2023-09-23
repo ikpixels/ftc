@@ -13,7 +13,7 @@
 				<div class="col-12">
 					<ul class="breadcrumb">
 						<li class="breadcrumb__item"><a href="{% url 'music_nation:nyansavibe'%}">Home</a></li>
-						<li class="breadcrumb__item breadcrumb__item--active">Contacts</li>
+						<li class="breadcrumb__item breadcrumb__item--active">Add Album</li>
 					</ul>
 				</div>
 				<!-- end breadcrumb -->
@@ -37,31 +37,31 @@
 							<div class="col-12">
 								<div class="sign__group">
 									<label class="sign__label">Album / Single title</label>
-									{% render_field form.album_name class="sign__input" placeholder="Ulbum name" autocomplete="off" %}
+									{{form.album_name|add_class:"sign__input"}}
 								</div>
 							</div>
 							<div class="col-12">
 								<div class="sign__group">
 									<label class="sign__label">Album Genre</label>
-									{% render_field form.album_genre class="sign__input" placeholder="Genre" autocomplete="off" %}
+									{{form.album_genre|add_class:"sign__input"}}
 								</div>
 							</div>
 							<div class="col-12">
 								<div class="sign__group">
 									<label class="sign__label">For Sale</label>
-									{% render_field form.sell class="sign__input" placeholder="Genre" autocomplete="off" %}
+									{{form.sell|add_class:"sign__input"}}
 								</div>
 							</div>
 							<div class="col-12">
 								<div class="sign__group">
 									<label class="sign__label">Price</label>
-									{% render_field form.price class="sign__input" placeholder="0.00" autocomplete="off" %}
+									{{form.price|add_class:"sign__input"}}
 								</div>
 							</div>
 							<div class="col-12">
 								<div class="sign__group">
-									<label class="sign__label">Artwork</label>
-									{% render_field form.album_logo class="sign__input" autocomplete="off" %}
+									<label class="sign__label">Artwork (500x500)</label>
+									{{form.album_logo|add_class:"sign__input"}}
 								</div>
 							</div>
 

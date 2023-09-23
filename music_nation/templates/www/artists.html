@@ -47,7 +47,7 @@
 
 						{% for Artist in Artist %}
 						<div class="col-6 col-sm-4 col-md-3 col-xl-2">
-							<a href="{% url 'music_nation:ArtistDetail' Artist.id %}" class="artist">
+							<a href="{% url 'music_nation:ArtistDetail' Artist.slug %}" class="artist">
 								<div class="artist__cover">
 									{% if Artist.profile_pic %}
 									<img src="{{Artist.profile_pic.url}}" alt="">

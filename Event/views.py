@@ -136,7 +136,12 @@ def add_event(request):
 	context = {}
 
 	try:
-		Subscription = PymtCode.objects.get(customer=request.user).code
+		Subscription = PymtCode.objects.filter(active=True,customer=str(request.user),Mid='EUC').last()
+		if Subscription:
+			pass
+		else:
+			return redirect('ikpixels:upload_payment')
+
 	except PymtCode.DoesNotExist:
 		return redirect('ikpixels:upload_payment')
 
@@ -154,6 +159,8 @@ def add_event(request):
 			form = form.save(commit=False)
 			form.client = request.user
 			form.save()
+			#Subscription.active= False
+			#Subscription.save()
 			return redirect('Event:events')
 	else:
 		form = EventForm()
