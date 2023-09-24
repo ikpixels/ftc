@@ -42,11 +42,11 @@ function album_cate(args){
     $.ajax({
         type  : "GET",
         url   : '/all-music/',
-        data  : {'data':args, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        data  : {'album_data':args, 'csrfmiddlewaretoken': '{{csrf_token}}'},
         
 
         success : function(response){
-            $(".releases").html(response['data']);
+            $(".albumreleases").html(response['data']);
          
         },
         error :function(error){

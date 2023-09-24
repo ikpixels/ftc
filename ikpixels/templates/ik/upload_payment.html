@@ -25,7 +25,13 @@
 				<!-- title -->
 				<div class="col-12">
 					<div class="main__title">
-						<h2>Mobile payment</h2>
+						{% if warningColor %}
+						<h2 style="color:red;">{{msg}}</h2><br>
+						<a aria-label="Chat on WhatsApp" href="https://wa.me/265993344416">Inform us</a>
+						<a href="{% url 'ikpixels:paymentDetail' request.user %}">| View your payments</a>
+						{% else %}
+						<h2>{{msg}}</h2>
+						{% endif %}
 					</div>
 				</div>
 				<!-- end title -->
@@ -61,7 +67,7 @@
 				<div class="col-12 col-md-6 col-lg-12 order-md-3 order-lg-3">
 					<div class="plan">
 						<p style="color:white;">National Bank :: 1004820758</p>
-						<p style="color:white;">Using the reference number/ transaction number from any of the payment mediums above kindly complete the form below.</p>
+						<p style="color:white;">Using the reference number/ transaction number from any of the payment mediums above kindly complete the checkout form.</p>
 					</div>
 				</div>
 			</div>

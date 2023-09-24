@@ -47,9 +47,20 @@ def pricing(request):
 def upload_payments(request):
 	context = {}
 
+	try:
+		pymt = MusicorEventPayment.objects.filter(user=request.user,aprove=False)
+		if pymt:
+			msg = "Your payment approval  is still on pending..."
+			context['warningColor'] = "red"
+		else:
+			msg = "Subsicribe first"
+	except MusicorEventPayment.DoesNotExist:
+		msg = "Subsicribe first"
+
 	playlist_snipt(request,context)
 	default_music_playlist(request,context)
 	cart_snipt(request,context)
+	context['msg'] = msg
 
 	context['form'] = SubscriptionUploadForm()
 	if request.method == "POST":
@@ -107,3 +118,29 @@ def uprove_upload_pymt(request,id=None):
 		return JsonResponse({'data':html})
 
 	return render(request,'ik/pymt-list.html',context)
+
+
+@login_required(login_url ="account:login")
+def paymentDetail(request,user):
+	context = {}
+
+	playlist_snipt(request,context)
+	default_music_playlist(request,context)
+	cart_snipt(request,context)
+
+	payment = MusicorEventPayment.objects.filter(user=request.user)
+	query =request.GET.get('q')
+	context['q_name'] = "Search subscription"
+
+	if query:
+		context['search_title'] = query
+		payment =payment.filter(Q(name__icontains=query)|
+        	                    Q(payment_method__icontains=query)|
+        	                    Q(category__icontains=query)|
+        	                    Q(PaymentReferenceNumber__icontains=query)|
+        	                    Q(aprove__icontains=query)|
+                                Q(created_at__icontains=query)).distinct().order_by('-id')
+
+	context['payment'] = payment
+	return render(request,'ik/pymtDetail.html',context)
+

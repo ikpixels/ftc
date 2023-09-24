@@ -38,4 +38,6 @@ urlpatterns = [
     path('playlist_view/',music_nation_views.playlist_view,name="playlist_view"),
 
     path('remove_from_playlist/<int:pk>', music_nation_views.remove_from_playlist,name='remove_from_playlist'),
+
+    path('<slug>/delete/', music_nation_views.delete_album, name='delete_album'),
 ]

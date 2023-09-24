@@ -30,6 +30,22 @@ from ikpixels.models import MusicorEventPayment,PymtCode
 
 import authorize
 
+
+
+def ikpaginator(args,request):
+
+    page = request.GET.get('page',1)
+    paginator = Paginator(args,12)
+
+    try:
+        args = paginator.page(page)
+    except PageNotAnInteger:
+        args = paginator.page(1)
+    except EmptyPage:
+        args = paginator.page(paginator.num_pages)
+
+    return args
+
 ##########################################################
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -81,27 +97,21 @@ def allTrack(request):
     default_music_playlist(request,context)
     playlist_snipt(request,context)
 
-    tracks = Song.objects.all()
+    tracks = Song.objects.all().order_by('-id')
 
     query =request.GET.get('q')
-    context['q_name'] = "Album name,genre"
+    context['q_name'] = "Album name,year,artist"
 
     if query:
         context['search_title'] = query
         tracks =tracks.filter(Q(song_name__icontains=query)|
+                              Q(year_name__icontains=query)|
+                              Q(song_genre_name__icontains=query)|
                               Q(Artist__icontains=query)).distinct().order_by('-id')
 
-    '''page = request.GET.get('page', 1)
-    paginator = Paginator(tracks,12)
-
-    try:
-        tracks = paginator.page(page)
-    except PageNotAnInteger:
-        tracks = paginator.page(1)
-    except EmptyPage:
-        tracks = paginator.page(paginator.num_pages)'''
-
-    context['tracks'] = tracks
+    
+    
+    context['tracks'] = ikpaginator(tracks,request)
     context['events'] = Ticket.ticketObjects.all()
     context['products']= Product.objects.all()
     context['albums'] = Album.objects.all()[:5]
@@ -110,7 +120,7 @@ def allTrack(request):
 
     if is_ajax(request) and request.GET.get('data_'):
         cate = request.GET.get('data_')
-        context['tracks'] =  Song.objects.filter(song_genre=str(cate))
+        context['tracks'] =  tracks.filter(song_genre=str(cate))
         html = render_to_string('www/music2.html',context)
         return JsonResponse({'data':html})
 
@@ -163,21 +173,15 @@ def Artist(request):
 
     query =request.GET.get('q')
 
-    context['q_name'] = "Artist name"
+    context['q_name'] = "Artist name,genre"
     if query:
         context['search_title'] = query
-        Artist =Artist.filter(Q(user__icontains=query)).distinct().order_by('-id')
+        Artist =Artist.filter(Q(slug__icontains=query)|
+                              Q(artist_genre__icontains=query)).distinct().order_by('-id')
 
-    #page = request.GET.get('page', 1)
-    #paginator = Paginator(Artist,12)
-
-    '''try:
-        Artist = paginator.page(page)
-    except PageNotAnInteger:
-        Artist = paginator.page(1)
-    except EmptyPage:
-        Artist = paginator.page(paginator.num_pages)'''
-    context ['Artist'] = Artist
+    
+    
+    context ['Artist'] = ikpaginator(Artist,request)
 
     if is_ajax(request) and request.GET.get('artists_data'):
         context['Artist'] = Customer.objects.filter(artist_genre=request.GET.get('artists_data'))[:12]
@@ -198,6 +202,11 @@ def ArtistDetail(request,slug):
     Artist = Customer.objects.get(slug=slug)
     context['Artist'] = Artist
 
+    if Artist.image_url != '':
+         context['image_link'] = Artist.image_url
+    context['link_description'] = Artist.user
+
+
     albums = Album.objects.filter(album_artist=Artist.user)
     context['albums'] = albums
     context['musichead'] = "Releases by " + str(Artist)
@@ -216,7 +225,7 @@ def allMusic(request):
     default_music_playlist(request,context)
     playlist_snipt(request,context)
 
-    albums = Album.objects.all()
+    albums = Album.objects.all().order_by('-id')
     
     
     query =request.GET.get('q')
@@ -225,26 +234,17 @@ def allMusic(request):
     if query:
         context['search_title'] = query
         albums =albums.filter(Q(album_name__icontains=query)|
-                          Q(album_genre__icontains=query)).distinct().order_by('-id')
+                              Q(slug__icontains=query)|
+                              Q(album_genre__icontains=query)).distinct().order_by('-id')
 
-    '''page = request.GET.get('page', 1)
-    paginator = Paginator(albums,12)
-
-    try:
-        albums = paginator.page(page)
-    except PageNotAnInteger:
-        albums = paginator.page(1)
-    except EmptyPage:
-        albums = paginator.page(paginator.num_pages)'''
-
-    context['albums'] = albums
+    
+    
+    context['albums'] = ikpaginator(albums,request)
     context['events'] = Ticket.ticketObjects.all()
     context['products']= Product.objects.all()
 
-
-    if is_ajax(request):
-        cate = request.GET['data']
-        context['albums'] =  Album.objects.filter(album_genre=str(cate))
+    if is_ajax(request) and request.GET['album_data']:
+        context['albums'] =  Album.objects.filter(album_genre=str(request.GET['album_data']))
         html = render_to_string('www/releases2.html',context)
         return JsonResponse({'data':html})
 
@@ -379,9 +379,8 @@ def profile_detail(request, username):
 
     default_music_playlist(request,context)
 
-    albums = get_object_or_404(User, username=username)
-    albums = albums.albums.all()
-
+    albums = Album.artistObjects.filter(album_artist=request.user)
+   
     context['albums'] = albums
     context['username'] = username
 
@@ -396,17 +395,26 @@ def add_album(request):
     context = {}
 
     default_music_playlist(request,context)
-
     username = request.user
-
+    
+    #----------------------Checking if user subscribed for uploads------------------------------
     try:
         Subscription = PymtCode.objects.filter(active=True,customer=str(request.user),Mid='MUC').last()
         if Subscription:
             pass
         else:
-            return redirect('ikpixels:upload_payment')
+            song_count = []
+            album= Album.artistObjects.filter(album_artist=request.user)
+            for s in album:
+                for t in s.songs.all():
+                    song_count.append(t)
+            if len(song_count) > 5:
+                return redirect('ikpixels:upload_payment')
+            else:
+                pass
     except PymtCode.DoesNotExist:
         return redirect('ikpixels:upload_payment')
+    #--------------------------------------------------------------------------------------------
 
     user = get_object_or_404(User, username=username)
     #only currently logged in user can add album else will be redirected to home
@@ -441,11 +449,21 @@ def album_detail(request,slug):
     default_music_playlist(request,context)
     playlist_snipt(request,context)
 
+
+
+
     #show album details here. single album's details.
     album = get_object_or_404(Album, slug=slug)
     songs = get_object_or_404(User, username=album.album_artist)
     songs = songs.albums.get(album_name=str(album))
     songs = songs.songs.all()
+
+
+    #details for og
+    if album.image_url != '':
+         context['image_link'] = album.image_url
+    context['link_description'] = album.slug
+    context['audio_link'] = songs.last().song_file.url
 
     context['songs'] = songs
     context['album'] = album
@@ -477,24 +495,32 @@ def add_song(request,id):
 
     context = {}
 
-
-
     default_music_playlist(request,context)
 
+    #----------------------Checking if user subscribed for uploads----------------------------
     try:
         Subscription = PymtCode.objects.filter(active=True,customer=str(request.user),Mid='MUC').last()
         if Subscription:
             pass
         else:
-            return redirect('ikpixels:upload_payment')
+            song_count = []
+            album= Album.artistObjects.filter(album_artist=request.user)
+            for s in album:
+                for t in s.songs.all():
+                    song_count.append(t)
+            if len(song_count) > 5:
+                return redirect('ikpixels:upload_payment')
+            else:
+                pass
     except PymtCode.DoesNotExist:
         return redirect('ikpixels:upload_payment')
+    #-----------------------------------------------------------------------------------------------
 
     user = get_object_or_404(User, username=request.user)
 
     if request.user == user:
 
-        album_get = Album.objects.get(id=id)
+        album_get = Album.artistObjects.get(id=id)
 
         if request.method == 'POST':
             form = NewSong(request.POST, request.FILES)
@@ -514,14 +540,14 @@ def add_song(request,id):
                 album_get.save()
                 Subscription.active=False
                 Subscription.save()
-                return redirect('music_nation:album_detail', slug=album_get.slug)
+                return redirect('music_nation:profile_detail', request.user)
 
         else:
             form = NewSong()
             context['form'] = form
             return render(request, 'www/add_new_song.html',context)
     else:
-        return redirect('music_nation:album_detail', slug=album_get.slug)
+        return redirect('music_nation:profile_detail',request.user)
 
 
 @csrf_exempt
@@ -541,18 +567,7 @@ def podcasts(request):
         context['search_title'] = query
         podcasts =podcasts.filter(Q(title__icontains=query)).distinct().order_by('-id')
 
-    '''page = request.GET.get('page', 1)
-    paginator = Paginator(podcasts,12)
-
-    try:
-        podcasts = paginator.page(page)
-    except PageNotAnInteger:
-        podcasts = paginator.page(1)
-    except EmptyPage:
-        podcasts = paginator.page(paginator.num_pages)'''
-
-    context['podcasts'] = podcasts
-
+    context['podcasts'] = ikpaginator(podcasts,request)
     context['events'] = Ticket.ticketObjects.all()
     context['products']= Product.objects.all()
   
@@ -568,3 +583,25 @@ def podcasts(request):
         return JsonResponse({'data':html})
 
     return render(request, 'www/podcasts.html',context)
+
+
+#........................................................#
+
+
+@login_required(login_url ="account:login")
+@csrf_exempt
+def delete_album(request,slug):
+
+    username = request.user
+
+    user = get_object_or_404(User, username=username)
+    if request.user == user:
+        album_to_delete = Album.artistObjects.get(slug=slug)
+        song_to_delete = album_to_delete.songs.all()
+        for song in song_to_delete:
+            song.delete_media()#deletes the song_file
+        album_to_delete.delete_media()#deletes the album_logo
+        album_to_delete.delete()#deletes the album from database
+        return redirect('music_nation:profile_detail', username=username)
+    else:
+        return redirect('music_nation:profile_detail', username=username)

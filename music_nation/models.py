@@ -31,7 +31,6 @@ def upload_audio_location(instance,filename):
     basename,extension =filename.split('.mp3')
     return "%s/%s_%s_%s_%s.%s"%( 'Audio','www.ikpixels.com',instance.song_name,'by',instance.Artist,'.mp3')
 
-
 DISTRICT = (('Balaka','Balaka'),
             ('Blantyre','Blantyre'),
             ('Chikwawa','Chikwawa'),
@@ -95,7 +94,7 @@ class Customer(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     account_type = models.CharField(max_length=40,choices=USER_CAT)
     #profile_pic = models.ImageField(upload_to='image',null=True,blank=True)
-    profile_pic= models.ImageField(upload_to='profile/%y/%m/%d',null=True,blank=True)
+    profile_pic= models.ImageField(upload_to='profile/%y/%m/%d',null=True,blank=True,default="ikartwork.jpg")
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20,null=False)
     artist_genre = models.CharField(max_length=30,choices=GENRE)
@@ -108,6 +107,7 @@ class Customer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
     @property
     def get_name(self):
         return self.user.first_name+" "+self.user.last_name
@@ -116,6 +116,10 @@ class Customer(models.Model):
         return self.user.id
     def __str__(self):
         return self.user.first_name
+    @property
+    def image_url(self):
+        if self.profile_pic and hasattr(self.profile_pic, 'url'):
+            return self.profile_pic.url
 
     def get_absolute2_url(self):
         return reverse('music_nation_views:ArtistDetail',kwargs ={'slug':self.slug})
@@ -155,7 +159,7 @@ def user_directory_path_song(self, filename):
 
 FREE_OR_NOT =(
       ('Free','Free'),
-      ('Sale','Sale'),
+      #('Sale','Sale'),
     )
 
 
@@ -170,11 +174,16 @@ class AdminAlbumObjectManager(models.Manager):
         songs = super(AdminAlbumObjectManager, self).get_queryset().filter(aproved=False)
         return songs
 
+class ArtistAlbumObjectManager(models.Manager):
+    def get_queryset(self):
+        album = super(ArtistAlbumObjectManager, self).get_queryset().all()
+        return album
+
 # Create your models here.
 class Album(models.Model):
     album_name = models.CharField(max_length=30)
     uploaded_on = models.DateTimeField(auto_now=True)
-    album_logo = models.ImageField(upload_to='artwork/%y/%m/%d',null=True,blank=True)
+    album_logo = models.ImageField(upload_to='artwork/%y/%m/%d',null=True,blank=True,default="ikartwork.jpg")
     #album_logo = CloudinaryField('artwork',null=True,blank=True)
     album_genre = models.CharField(max_length=30,choices=GENRE)
     aboutAlbum = RichTextField(null=True,blank=True)
@@ -191,18 +200,25 @@ class Album(models.Model):
 
     objects = AlbumObjectManager()
     AdminAlbumAproval = AdminAlbumObjectManager()
+    artistObjects = ArtistAlbumObjectManager()
 
     def __str__(self):
         return self.album_name
-
+    @property
     def artist(self):
         user = self.album_artist
         artist = Customer.objects.get(user=user).slug
         return artist
+    @property
+    def image_url(self):
+        if self.album_logo and hasattr(self.album_logo, 'url'):
+            return self.album_logo
 
     def get_absolute_url(self):
         return reverse('music_nation_views:album_detail',kwargs ={'slug':self.slug})
 
+    def delete_media(self):
+        os.remove(path=MEDIA_ROOT+'/'+str(self.album_logo))
 
 def create_album_slug(instance,new_slug=None):
 
@@ -246,13 +262,18 @@ class AdminSongObjectManager(models.Manager):
         songs = super(AdminSongObjectManager, self).get_queryset().filter(aproved=False)
         return songs
 
+class ArtistSongObjectManager(models.Manager):
+    def get_queryset(self):
+        songs = super(ArtistSongObjectManager, self).get_queryset().all()
+        return songs
+
 
 class Song(models.Model):
     song_name = models.CharField(max_length=40)
     Artist = models.CharField(max_length=40,null=True,blank=True)
     song_album = models.ForeignKey(Album,on_delete=models.CASCADE, related_name='songs')
     song_file=models.FileField(upload_to=upload_audio_location,null=True,blank=True)
-    artwork = models.ImageField(upload_to='artwork/%y/%m/%d',null=True,blank=True)
+    artwork = models.ImageField(upload_to='artwork/%y/%m/%d',null=True,blank=True,default="ikartwork.jpg")
     song_genre = models.CharField(max_length=30,choices=GENRE)
     video = EmbedVideoField(null=True,blank=True)
     streamingCount = models.PositiveIntegerField(default=0)
@@ -267,6 +288,7 @@ class Song(models.Model):
 
     objects = SongObjectManager()
     adminAprove = AdminSongObjectManager()
+    ArtistSongObject  = ArtistSongObjectManager()
 
     def __str__(self):
         return self.song_name +' '+ str(self.song_album)
@@ -277,10 +299,12 @@ class Song(models.Model):
     def album(self):
         return self.song_album
 
+    def delete_media(self):
+        os.remove(path=MEDIA_ROOT+'/'+str(self.song_file))
+
     def artst_url(self):
         album = Album.objects.get(id=self.song_album.id).album_artist
         artist_slug = Customer.objects.get(user=album).slug
-
         return artist_slug
 
 PodCategory = (

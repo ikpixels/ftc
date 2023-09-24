@@ -23,6 +23,7 @@ from music_nation.forms import PodcastForm
 from Store.views import cart_snipt
 from Store.models import Product,Orders
 from Event.models import Ticket
+from ikpixels.models import MusicorEventPayment
 
 # Create your views here.
 
@@ -156,6 +157,7 @@ def profile(request):
         context['podcount'] = Podcasts.objects.filter(user=request.user).count()
         context['musiccount'] = Album.objects.filter(album_artist=request.user).count()
         context['ticketcount'] = Ticket.ticketObjects.filter(client=request.user).count()
+        context['Subscription'] = MusicorEventPayment.objects.filter(user=request.user).count()
         context['albums'] = Album.objects.all()
         return render(request, 'account/profile.html',context)
 #........................................................#
@@ -204,9 +206,15 @@ def adminAproveMusic(request):
     if is_ajax(request) and request.GET.get('data'):
 
         song = Song.adminAprove.get(id=request.GET.get('data'))
-        album_ = Album.AdminAlbumAproval.get(id=song.song_album.id)
-        album_.aproved = True
-        album_.save()
+
+        # to avoid album query does does not exisit error if it aproved twice
+        try:
+            album_ = Album.AdminAlbumAproval.get(id=song.song_album.id)
+            album_.aproved = True
+            album_.save()
+        except Album.DoesNotExist:
+            pass 
+
         song.aproved = True
         song.save()
 

@@ -23,3 +23,13 @@ class ContactAdmin(admin.ModelAdmin):
   search_fields=['name','created_at',]
 
 admin.site.register(contacts,ContactAdmin)
+
+'''@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    #list_display = ('title', 'rating', 'author', 'is_bestselling',)
+    #list_display_links = ('title', 'rating',)
+    #search_fields = ('title', 'rating', 'author__first_name', 'author__last_name',)
+    #list_filter = ('rating', 'is_bestselling',)
+    prepopulated_fields = {
+        'slug': ('title',)
+    }'''

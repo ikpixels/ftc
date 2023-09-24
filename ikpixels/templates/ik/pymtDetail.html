@@ -1,0 +1,66 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{%block content%}
+<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Subscription|{{request.user}}</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+			<div class="row row--grid">
+				<div class="col-12 col-lg-12">
+					<!-- cart -->
+					<div class="cart">
+						<div class="cart__table-wrap">
+							<div class="cart__table-scroll">
+								<table class="cart__table">
+									<thead>
+										<tr>
+											<th colspan="3">DATE</th>
+											<th>NAME</th>
+											<th>PHONE</th>
+											<th>SUBSCRIPTION</th>
+											<th>PAYMENT METHOD</th>
+											<th>AMOUNT</th>
+											<th>REF</th>
+											<th>APROVED</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for p in payment %}
+										<tr>
+											<td colspan="3">{{p.created_at}}</td>
+                                            <td>{{p.name}}</td>
+											<td>{{p.phone}}</td>
+											<td>{{p.category}}</td>
+											<td>{{p.payment_method}}</td>
+											<td>{{p.amount}}</td>
+											<td>{{p.PaymentReferenceNumber}}</td>
+											{% if p.aprove == False %}
+											<td style="color:red">No</td>
+											{% else %}
+											<td style="color:green;">YES</td>
+											{% endif %}
+										{% empty%}
+										<td colspan="7" style="color:red;">Empty.....</td>
+										{% endfor %}
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- end cart -->
+					<a class="sign__btn" aria-label="Chat on WhatsApp" href="https://wa.me/265993344416">Truck your Subscription via whatsapp</a>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock content %}
