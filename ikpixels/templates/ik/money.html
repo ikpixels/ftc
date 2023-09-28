@@ -1,0 +1,83 @@
+{% extends 'www/base.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{%block content%}
+<main class="main">
+		<div class="container-fluid">
+			<div class="row row--grid">
+				<!-- breadcrumb -->
+				<div class="col-12">
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a href="/">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Payments|{{request.user}}</li>
+					</ul>
+				</div>
+				<!-- end breadcrumb -->
+
+			 <div class="row row--grid">
+				
+			    <div class="col-12 col-lg-8 col-xl-3">
+					<div class="stats">
+						<span>Amount to be paid</span>
+						    <p><b>{{notPaid}}</b></p>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6,11a1,1,0,1,0,1,1A1,1,0,0,0,6,11Zm12,0a1,1,0,1,0,1,1A1,1,0,0,0,18,11Zm2-6H4A3,3,0,0,0,1,8v8a3,3,0,0,0,3,3H20a3,3,0,0,0,3-3V8A3,3,0,0,0,20,5Zm1,11a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V8A1,1,0,0,1,4,7H20a1,1,0,0,1,1,1ZM12,9a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13Z"/></svg>
+						</div>
+				</div>
+
+				<div class="col-12 col-lg-6 col-xl-3">
+					<div class="stats">
+						<span>Paid</span>
+						<p><b>{{paid}}</b></p>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6,11a1,1,0,1,0,1,1A1,1,0,0,0,6,11Zm12,0a1,1,0,1,0,1,1A1,1,0,0,0,18,11Zm2-6H4A3,3,0,0,0,1,8v8a3,3,0,0,0,3,3H20a3,3,0,0,0,3-3V8A3,3,0,0,0,20,5Zm1,11a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V8A1,1,0,0,1,4,7H20a1,1,0,0,1,1,1ZM12,9a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13Z"/></svg>
+					</div>
+				</div>
+
+				<div class="col-12 col-lg-6 col-xl-3">
+					<div class="stats">
+						<span>Total Money</span>
+						<p><b>{{total}}</b></p>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6,11a1,1,0,1,0,1,1A1,1,0,0,0,6,11Zm12,0a1,1,0,1,0,1,1A1,1,0,0,0,18,11Zm2-6H4A3,3,0,0,0,1,8v8a3,3,0,0,0,3,3H20a3,3,0,0,0,3-3V8A3,3,0,0,0,20,5Zm1,11a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V8A1,1,0,0,1,4,7H20a1,1,0,0,1,1,1ZM12,9a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13Z"/></svg>
+					</div>
+				</div>
+			</div>
+
+			<div class="row row--grid">
+				<div class="col-12 col-lg-6">
+					<!-- cart -->
+					<div class="cart">
+						<div class="cart__table-wrap">
+							<div class="cart__table-scroll">
+								<table class="cart__table">
+									<thead>
+										<tr>
+											<th colspan="5">CODE</th>
+											<th>CUSTOMER</th>
+											<th>VALUE (MK)</th>
+											<th>PAID</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% for p in money %}
+										<tr>
+											<td colspan="5">{{p}}</td>
+											<td>{{p.customer}}</td>
+											<td>{{p.codeValue}}</td>
+											{% if p.paid == False %}
+											<td>Not paid</td>
+											{% else %}
+											<td>Paid</td>
+											{% endif %}
+										{% endfor %}
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- end cart -->
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock content %}

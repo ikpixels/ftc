@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from music_nation import snipt
+from music_nation.models import Song
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -44,7 +45,7 @@ def pricing(request):
 
 @login_required(login_url ="account:login")
 @csrf_exempt
-def upload_payments(request):
+def upload_payments(request,id=None,item=None):
 	context = {}
 
 	try:
@@ -56,11 +57,18 @@ def upload_payments(request):
 			msg = "Subsicribe first"
 	except MusicorEventPayment.DoesNotExist:
 		msg = "Subsicribe first"
+	context['msg'] = msg
 
 	playlist_snipt(request,context)
 	default_music_playlist(request,context)
 	cart_snipt(request,context)
-	context['msg'] = msg
+
+
+	if item == "release":
+		release = Song.objects.get(id=int(id))
+		context['pymt_info'] = release
+	else:
+		pass
 
 	context['form'] = SubscriptionUploadForm()
 	if request.method == "POST":
@@ -68,8 +76,11 @@ def upload_payments(request):
 		if form.is_valid():
 			form = form.save(commit=False)
 			form.user = request.user
+			if item == "release":
+				form.item_id = release.id
 			form.save()
 			return redirect('ikpixels:payment_success')
+
 	return render(request,'ik/upload_payment.html',context)
 
 
@@ -108,6 +119,11 @@ def uprove_upload_pymt(request,id=None):
 		if pymt_aproved.category == "Music":
 			code = PymtCode(Mid='MUC',customer=pymt_aproved.user,codeValue=pymt_aproved.amount,code=snipt.secret_code(),codeOwner="admin")
 			code.save()
+		if pymt_aproved.category == "Music_Purchase":
+			artist = Song.objects.get(id=int(pymt_aproved.item_id)).song_album.album_artist
+			mid = "MDC"+'-'+ pymt_aproved.item_id
+			code = PymtCode(Mid=mid,customer=pymt_aproved.user,codeValue=pymt_aproved.amount,code=snipt.secret_code(),codeOwner=artist)
+			code.save()
 
 		pymt_aproved.save()
 
@@ -118,6 +134,17 @@ def uprove_upload_pymt(request,id=None):
 		return JsonResponse({'data':html})
 
 	return render(request,'ik/pymt-list.html',context)
+
+
+@login_required(login_url ="account:login")
+def userMoney(request):
+	context = {}
+	code = PymtCode.objects.filter(codeOwner=request.user)
+	context['money'] = code
+	context['paid'] = PymtCode.objects.filter(codeOwner=request.user,paid=True).count()
+	context['notPaid'] = PymtCode.objects.filter(codeOwner=request.user,paid=False).count()
+	context['total'] = PymtCode.objects.filter(codeOwner=request.user).count()
+	return render(request,'ik/money.html',context)
 
 
 @login_required(login_url ="account:login")

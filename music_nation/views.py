@@ -25,11 +25,22 @@ from .forms import NewAlbum, NewSong
 from Store.models import Product,Orders
 from Event.models import Ticket
 from music_nation import snipt
-#from Store.views import cart_snipt
 from ikpixels.models import MusicorEventPayment,PymtCode
 
 import authorize
 
+
+import requests
+from bs4 import BeautifulSoup
+
+def cart_snipt(request,context):
+    if 'product_ids' in request.COOKIES:
+        product_ids = request.COOKIES['product_ids']
+        counter=product_ids.split('|')
+        product_count_in_cart=len(set(counter))
+    else:
+        product_count_in_cart=0
+    context ['product_count_in_cart'] = product_count_in_cart
 
 
 def ikpaginator(args,request):
@@ -72,6 +83,7 @@ def home(request):
 
     playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
 
     #show all albums in chronological order of it's upload
     albums = Album.objects.all()[:10]
@@ -86,7 +98,24 @@ def home(request):
     all_songs = Song.objects.all()[:10]
     context['all_songs'] = all_songs
     context['video'] = Podcasts.objects.all().order_by('-id')
-  
+
+
+    '''URL = "https://www.malawi-music.com/search.php?term=gwamba"
+    page = requests.get(URL)
+    image = []
+    soup = BeautifulSoup(page.content, "html.parser")
+    link = soup.find_all("a",{"class": "card-title"})
+    img = soup.find_all("img",{"class": "card-img-top"})
+    for m in  img:
+        image.append(m['src'].replace('/timthumb.php?src=' ,''))
+    
+    context['tr'] = image
+    #print(results)
+    for r in results:
+        print(r.find("img",{"class": "card-img-top"}))
+        print('---------------------------------------------------------------')
+        a = r.find("a",attrs={'href': True,"class": "card-title"})
+        print(a.href)'''
     return render(request, 'www/index.html',context)
 #........................................................#
 
@@ -96,6 +125,7 @@ def allTrack(request):
 
     default_music_playlist(request,context)
     playlist_snipt(request,context)
+    cart_snipt(request,context)
 
     tracks = Song.objects.all().order_by('-id')
 
@@ -105,8 +135,8 @@ def allTrack(request):
     if query:
         context['search_title'] = query
         tracks =tracks.filter(Q(song_name__icontains=query)|
-                              Q(year_name__icontains=query)|
-                              Q(song_genre_name__icontains=query)|
+                              Q(year__icontains=query)|
+                              Q(song_genre__icontains=query)|
                               Q(Artist__icontains=query)).distinct().order_by('-id')
 
     
@@ -131,25 +161,6 @@ def allTrack(request):
        
 
     return render(request, 'www/music.html',context)
-
-@csrf_exempt
-def Contacts(request):
-    context = {}
-
-    default_music_playlist(request,context)
-    playlist_snipt(request,context)
-
-    if is_ajax(request):
-        email = request.GET.get('email')
-        name=request.GET.get('name')
-        subject =request.GET.get('subject')
-        body =request.GET.get('text')
-        form=contacts(name=name,email=email,subject=subject,body=body)
-        form.save()
-       
-    return render(request, 'www/contacts.html',context)
-   
-
 #........................................................#
 
 def Artist(request):
@@ -166,6 +177,7 @@ def Artist(request):
 
     default_music_playlist(request,context)
     playlist_snipt(request,context)
+    cart_snipt(request,context)
 
     context['events'] = Ticket.ticketObjects.all()
    
@@ -198,6 +210,7 @@ def ArtistDetail(request,slug):
 
     playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
 
     Artist = Customer.objects.get(slug=slug)
     context['Artist'] = Artist
@@ -224,6 +237,7 @@ def allMusic(request):
 
     default_music_playlist(request,context)
     playlist_snipt(request,context)
+    cart_snipt(request,context)
 
     albums = Album.objects.all().order_by('-id')
     
@@ -260,6 +274,7 @@ def add_to_playlist(request,pk):
     albums = Album.objects.all()
 
     default_music_playlist(request,context)
+    cart_snipt(request,context)
     
     #for playlist counter, fetching song ids added by user from cookies
     if 'song_ids' in request.COOKIES:
@@ -294,6 +309,7 @@ def playlist_view(request):
     context = {}
     
     playlist_snipt(request,context)
+    cart_snipt(request,context)
 
     # fetching song details from db whose id is present in cookie
     song=None
@@ -317,6 +333,7 @@ def remove_from_playlist(request,pk):
 
     default_music_playlist(request,context)
     playlist_snipt(request,context)
+    cart_snipt(request,context)
 
     # removing song id from cookie
  
@@ -341,13 +358,6 @@ def remove_from_playlist(request,pk):
             response.delete_cookie('song_ids')
         response.set_cookie('song_ids',value)
         return response
-
-#........................................................#
-
-def about(request):
-    context = {}
-    default_music_playlist(request,context)
-    return render(request, 'www/about.html',context)
 #........................................................#
 @login_required(login_url ="account:login")
 @csrf_exempt
@@ -356,6 +366,7 @@ def updateCustomer(request,id):
 
     default_music_playlist(request,context)
     playlist_snipt(request,context)
+    cart_snipt(request,context)
     Artist = Customer.objects.get(id=id)
 
     customerForm = CustomerForm(instance=Artist)
@@ -378,6 +389,7 @@ def profile_detail(request, username):
     # show all albums of the artist
 
     default_music_playlist(request,context)
+    cart_snipt(request,context)
 
     albums = Album.artistObjects.filter(album_artist=request.user)
    
@@ -395,6 +407,7 @@ def add_album(request):
     context = {}
 
     default_music_playlist(request,context)
+    cart_snipt(request,context)
     username = request.user
     
     #----------------------Checking if user subscribed for uploads------------------------------
@@ -448,16 +461,13 @@ def album_detail(request,slug):
 
     default_music_playlist(request,context)
     playlist_snipt(request,context)
-
-
-
+    cart_snipt(request,context)
 
     #show album details here. single album's details.
     album = get_object_or_404(Album, slug=slug)
     songs = get_object_or_404(User, username=album.album_artist)
     songs = songs.albums.get(album_name=str(album))
     songs = songs.songs.all()
-
 
     #details for og
     if album.image_url != '':
@@ -496,6 +506,7 @@ def add_song(request,id):
     context = {}
 
     default_music_playlist(request,context)
+    cart_snipt(request,context)
 
     #----------------------Checking if user subscribed for uploads----------------------------
     try:
@@ -557,6 +568,7 @@ def podcasts(request):
 
     playlist_snipt(request,context)
     default_music_playlist(request,context)
+    cart_snipt(request,context)
 
     podcasts = Podcasts.objects.all().order_by('-id')
 
@@ -586,8 +598,6 @@ def podcasts(request):
 
 
 #........................................................#
-
-
 @login_required(login_url ="account:login")
 @csrf_exempt
 def delete_album(request,slug):
@@ -605,3 +615,29 @@ def delete_album(request,slug):
         return redirect('music_nation:profile_detail', username=username)
     else:
         return redirect('music_nation:profile_detail', username=username)
+
+#........................................................#
+
+def about(request):
+    context = {}
+    default_music_playlist(request,context)
+    return render(request, 'www/about.html',context)
+
+
+@csrf_exempt
+def Contacts(request):
+    context = {}
+
+    default_music_playlist(request,context)
+    playlist_snipt(request,context)
+    cart_snipt(request,context)
+
+    if is_ajax(request):
+        email = request.GET.get('email')
+        name=request.GET.get('name')
+        subject =request.GET.get('subject')
+        body =request.GET.get('text')
+        form=contacts(name=name,email=email,subject=subject,body=body)
+        form.save()
+       
+    return render(request, 'www/contacts.html',context)

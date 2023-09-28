@@ -159,7 +159,7 @@ def user_directory_path_song(self, filename):
 
 FREE_OR_NOT =(
       ('Free','Free'),
-      #('Sale','Sale'),
+      ('Sale','Sale'),
     )
 
 
@@ -295,6 +295,9 @@ class Song(models.Model):
 
     def song_logo(self):
         return self.song_album.album_logo
+
+    def song_user(self):
+        return self.song_album
 
     def album(self):
         return self.song_album

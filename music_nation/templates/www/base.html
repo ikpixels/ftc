@@ -16,7 +16,7 @@
 	
 	<link rel="stylesheet" href="{% static 'www/css/style.css' %}">
     {%if audio_link %}
-    <meta property="og:audio" content="{{audio_link}}" />
+    <meta property="og:audio" content="{{audio_link.url}}" />
     {%endif%}
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ikpixels.com/">

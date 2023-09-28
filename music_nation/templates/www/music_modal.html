@@ -21,7 +21,7 @@
 			<label class="sign__label" for="value">CVV/CVC</label>
 			{{form.cc_code|add_class:"sign__input"}}
 		</div>
-		<button class="sign__btn" type="submit">Buy</button>
+		<a class="sign__btn" href="{% url 'ikpixels:purchese_payment' 'release' song.id %}">Buy</a>
 	</form>
 	{% endfor %}
 	<!-- end modal ticket -->
