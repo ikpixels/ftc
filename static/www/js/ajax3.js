@@ -25,6 +25,36 @@ $(document).ready(function(){
     
   });
 
+//-------------------------------Signup-------------------------------------------------------
+$('#signupForm').on('submit', function(event){
+    event.preventDefault();
+    var this_form = $(this);
+    var url = '/accountsignup/';
+    var data = this_form.serialize();
+
+    if ($('input[name=remember]').is(':checked')){
+        $.ajax({
+        type  : "POST",
+        url   : url,
+        data  : data,
+        
+
+        success : function(response){
+            this_form[0].reset();
+            location.href = '/accountprofile/';  
+        },
+        error :function(error){
+            alert('something is wrong!!');
+        }
+    })
+    }else{
+        $('#privency').css('display','block');
+            
+    }
+
+  });
+//----------------------------------------------------------------------------------------------
+
 })
 
 $(document).ready(function(){

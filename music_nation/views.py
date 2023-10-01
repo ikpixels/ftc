@@ -474,6 +474,7 @@ def album_detail(request,slug):
          context['image_link'] = album.image_url
     context['link_description'] = album.slug
     context['audio_link'] = songs.last().song_file.url
+    print(songs.last().song_file.url)
 
     context['songs'] = songs
     context['album'] = album

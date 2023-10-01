@@ -21,14 +21,14 @@
 				<div class="col-12">
 					<div class="sign">
 						<div class="sign__content">
-							<form action="#" method="post" class="sign__form">
+							<form action="#"  method="post" class="sign__form" id="signupForm">
 								{%csrf_token%}
 								<a href="{% url 'music_nation:nyansavibe' %}" class="sign__logo">
 									<img src="{% static 'www/img/logo.png' %}" alt="">
 								</a>
 
 
-								<div class="sign__group">
+								<<div class="sign__group">
 									<label class="p-1" style="color:white;">Account Type</label>
 									{{customerForm.account_type|add_class:"sign__input" }}
 								</div>
@@ -76,22 +76,16 @@
 								</div>
 
 								<div class="sign__group sign__group--checkbox">
-									<input id="remember" name="remember" type="checkbox" checked="checked">
+									<input id="remember" name="remember" type="checkbox" >
 
-									<label for="remember">I agree to the <a href="#">Privacy Policy</a></label>
+									<label for="remember">I agree to the <a href="{% url 'ikpixels:terms' %}">Privacy Policy</a></label>
 
 								</div>
 
                                 <p style="color:red;">{{message}}</p>
+                                <p id="privency" style="display:none;color:red;">Please ensure that you agree to the <a href="{% url 'ikpixels:terms' %}">Privacy Policy</a> before signup then check the box above.</p>
 								
 								<button class="sign__btn" type="submit">Sign up</button>
-
-								<span class="sign__delimiter">or</span>
-
-								<div class="sign__social">
-									
-								</div>
-
 								<span class="sign__text">Already have an account? <a href="{%url 'account:login' %}">Sign in!</a></span>
 							</form>
 						</div>
@@ -102,5 +96,13 @@
 		</div>
 	</main>
 	<!-- end main content -->
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+    
+
+})
+</script>
 
 {%endblock%}

@@ -171,3 +171,11 @@ def paymentDetail(request,user):
 	context['payment'] = payment
 	return render(request,'ik/pymtDetail.html',context)
 
+
+def terms_andConditions(request):
+	context = {}
+	playlist_snipt(request,context)
+	default_music_playlist(request,context)
+	cart_snipt(request,context)
+	return render(request,'ik/terms.html',context)
+

@@ -14,5 +14,6 @@ urlpatterns = [
     path('Payment/<item>/<int:id>/',views.upload_payments,name='purchese_payment'),
     path('uprove_upload_pymt/',views.uprove_upload_pymt,name='uprove_upload_pymt'),
     path('moneyTocken/',views.userMoney,name='money'),
+    path('privacy-policy/',views.terms_andConditions,name='terms'),
     path('payment/success/', LoginView.as_view(template_name='ik/payment_success.html'), name="payment_success"),
     ]
