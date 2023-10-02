@@ -21,6 +21,8 @@ from cloudinary.models import CloudinaryField
 
 from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
 
+from PIL import Image
+
 class Card_Payment(models.Model):
     cc_number = CardNumberField('card number')
     cc_expiry = CardExpiryField('expiration date')
@@ -159,7 +161,7 @@ def user_directory_path_song(self, filename):
 
 FREE_OR_NOT =(
       ('Free','Free'),
-      ('Sale','Sale'),
+      #('Sale','Sale'),
     )
 
 
@@ -204,6 +206,7 @@ class Album(models.Model):
 
     def __str__(self):
         return self.album_name
+
     @property
     def artist(self):
         user = self.album_artist

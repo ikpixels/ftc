@@ -28,11 +28,39 @@ from music_nation import snipt
 from ikpixels.models import MusicorEventPayment,PymtCode
 
 import authorize
+import random
+import requests
+
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 
 import requests
 from bs4 import BeautifulSoup
+from ikpixels.models import IKspotify
 
+
+
+def ik_spotify(context):
+
+    link_list = []
+    spot_link = IKspotify.objects.all()
+    for s in spot_link:
+        link_list.append(s.spotify_id)
+    artist_uri = random.choice(link_list)
+
+
+    spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='d2c2806b1059476cb0a94b5ff56138c9',
+                                                                                  client_secret='55d2fc7ef4af4b009a3b3b36db587d46',))
+    results = spotify.artist_top_tracks(artist_uri)
+    final_result=results['tracks']
+    context['spotify'] = final_result
+    context['link'] = artist_uri
+
+    artist = spotify.artist(artist_uri)
+    context['artist'] = artist['name']
+    
+#--------------------------------------------------------------------------------------------------------
 def cart_snipt(request,context):
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
@@ -84,6 +112,7 @@ def home(request):
     playlist_snipt(request,context)
     default_music_playlist(request,context)
     cart_snipt(request,context)
+    ik_spotify(context)
 
     #show all albums in chronological order of it's upload
     albums = Album.objects.all()[:10]
@@ -98,6 +127,9 @@ def home(request):
     all_songs = Song.objects.all()[:10]
     context['all_songs'] = all_songs
     context['video'] = Podcasts.objects.all().order_by('-id')
+
+
+  
 
 
     '''URL = "https://www.malawi-music.com/search.php?term=gwamba"
@@ -178,6 +210,7 @@ def Artist(request):
     default_music_playlist(request,context)
     playlist_snipt(request,context)
     cart_snipt(request,context)
+    ik_spotify(context)
 
     context['events'] = Ticket.ticketObjects.all()
    
@@ -622,6 +655,7 @@ def delete_album(request,slug):
 def about(request):
     context = {}
     default_music_playlist(request,context)
+    ik_spotify(context)
     return render(request, 'www/about.html',context)
 
 

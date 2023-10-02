@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import PymtCode,MusicorEventPayment
+from . models import PymtCode,MusicorEventPayment,IKspotify
 
 class PymtAdmin(admin.ModelAdmin):
   list_display = ('user','name','amount','payment_method','PaymentReferenceNumber','phone')
@@ -8,3 +8,4 @@ class PymtAdmin(admin.ModelAdmin):
 
 admin.site.register(MusicorEventPayment,PymtAdmin)
 admin.site.register(PymtCode)
+admin.site.register(IKspotify)

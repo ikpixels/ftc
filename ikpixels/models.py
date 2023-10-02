@@ -47,3 +47,14 @@ class MusicorEventPayment(models.Model):
 
 	def __str__(self):
 		return self.category
+
+
+class IKspotify(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	spotify_id = models.URLField()
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.spotify_id
+
