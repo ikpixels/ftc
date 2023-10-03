@@ -50,8 +50,8 @@ def ik_spotify(context):
     artist_uri = random.choice(link_list)
 
 
-    spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='d2c2806b1059476cb0a94b5ff56138c9',
-                                                                                  client_secret='55d2fc7ef4af4b009a3b3b36db587d46',))
+    spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='ID',
+                                                                                  client_secret='SECRET',))
     results = spotify.artist_top_tracks(artist_uri)
     final_result=results['tracks']
     context['spotify'] = final_result
